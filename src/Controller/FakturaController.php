@@ -72,7 +72,7 @@ class FakturaController extends AbstractController {
 
     }
 
-    #[Route('/{id}', name: 'prikazi_fakturu',methods: ['GET'])]
+    #[Route('/{id}', name: 'prikazi_fakturu',methods: ['GET','POST'])]
     public function prikaziFakturu(Faktura $faktura) {
 
         return $this->forward('App\Controller\FakturaController::fakturaForma', [
