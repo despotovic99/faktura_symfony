@@ -28,12 +28,13 @@ class Faktura
     #[Assert\NotBlank(message: 'Unesi datum izdavanja racuna')]
     private $datum_izdavanja;
 
+    #[ORM\ManyToOne(targetEntity: Organizacija::class, inversedBy: 'fakture')]
+  //  #[ORM\JoinColumn(nullable: false)]
+    private $organizacija;
+
     #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true)]
     private $stavke;
 
-    #[ORM\ManyToOne(targetEntity: Organizacija::class, inversedBy: 'fakture')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $organizacija;
 
     public function __construct()
     {
