@@ -46,3 +46,12 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.3. Set the 'ServerName' directive globally to suppress this message
 [Tue Mar 22 10:25:29.173000 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
 [Tue Mar 22 10:25:29.173060 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Mar 22 11:39:09.240093 2022] [php:notice] [pid 17] [client 172.20.0.1:42732] 2022-03-22T11:39:09+00:00 [critical] Uncaught Error: Unclosed '{' on line 24 does not match ')'
+[Tue Mar 22 12:42:35.410028 2022] [core:notice] [pid 1] AH00051: child pid 21 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Mar 22 13:23:59.763379 2022] [php:notice] [pid 103] [client 172.20.0.1:42954] 2022-03-22T13:23:59+00:00 [critical] Uncaught Exception: The file "/var/www/html/config/packages/twig.yaml" does not contain valid YAML: Unable to parse at line 3 (near "    form_themes: ['bootstrap_5_layout.html.twig']") in /var/www/html/config/packages/twig.yaml (which is being imported from "/var/www/html/src/Kernel.php").
+[Tue Mar 22 13:57:15.901659 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.4. Set the 'ServerName' directive globally to suppress this message
+[Tue Mar 22 13:57:40.488038 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
+[Tue Mar 22 13:57:40.488093 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Mar 22 14:17:43.834137 2022] [core:notice] [pid 1] AH00051: child pid 20 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Mar 22 14:18:21.319924 2022] [php:notice] [pid 24] [client 172.21.0.1:52770] 2022-03-22T14:18:21+00:00 [critical] Uncaught Error: syntax error, unexpected token "}"

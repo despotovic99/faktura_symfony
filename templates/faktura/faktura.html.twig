@@ -1,0 +1,31 @@
+{# <li>Broj racuna {{ faktura.brojracuna}}</li> #}
+{# <br> #}
+{# {% for stavka in faktura.stavke %} #}
+{#    {{ stavka.nazivartikla }} kolicina:   {{ stavka.kolicina }} #}
+{#    <br> #}
+{# {% endfor %} #}
+{# <br> #}
+{# <li>{{ faktura.organizacija.naziv}}</li> #}
+{% extends  'base.html.twig' %}
+
+  {% block body %}
+      {{ form_start(form) }}
+
+      <div class="mb-3">
+          <label for="broj_racuna" class="form-label">Broj racuna</label>
+          {{ form_widget(form.broj_racuna) }}
+      </div>
+
+      <div class="mb-3">
+          <label>Datum izdavanja racuna: </label>
+          {{ form_widget(form.datum_izdavanja) }}
+      </div>
+
+      <div class="mb-3">
+          <label>Organizacija: </label>
+          {{ form_widget(form.organizacija) }}
+      </div>
+
+      {{ form_end(form) }}
+
+  {% endblock %}
