@@ -9,6 +9,12 @@
 {% extends  'base.html.twig' %}
 
   {% block body %}
+
+      {% for message in app.flashes('poruka') %}
+          <div class="flash-notice">
+              {{ message }}
+          </div>
+      {% endfor %}
       {{ form_start(form) }}
 
       <div class="mb-3">
@@ -27,5 +33,7 @@
       </div>
 
       {{ form_end(form) }}
+
+      {{ include('faktura/stavke_fakture.html.twig',{'stavke':faktura.stavke}) }}
 
   {% endblock %}

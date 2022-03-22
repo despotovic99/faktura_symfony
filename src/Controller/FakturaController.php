@@ -6,13 +6,14 @@ use App\Entity\Faktura;
 use App\Entity\Organizacija;
 use App\Form\FakturaType;
 use Doctrine\Persistence\ManagerRegistry;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/faktura')]
@@ -27,7 +28,7 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/form', name: 'faktura_forma')]
-    public function fakturaForma(?Faktura $faktura, ManagerRegistry $managerRegistry): Response {
+    public function fakturaForma(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
@@ -47,21 +48,49 @@ class FakturaController extends AbstractController {
                     return $organizacija ? $organizacija->getNaziv() : '';
                 }
             ])
+            ->add('sacuvaj', SubmitType::class)
             ->getForm();
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $faktura=$form->getData();
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->persist($faktura);
+
+            $entityManager->flush();
+
+            $this->addFlash('poruka',"Uspesno sacuvana faktura");
+
+        }
+
         return $this->render('faktura/faktura.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'faktura'=>$faktura
         ]);
 
     }
 
-    #[Route('/{id}', name: 'prikazi_fakturu')]
+    #[Route('/prikazi/{id}', name: 'prikazi_fakturu')]
     public function prikaziFakturu(Faktura $faktura) {
 
         return $this->forward('App\Controller\FakturaController::fakturaForma', [
             'faktura' => $faktura
         ]);
-
     }
+
+    #[Route('/obrisi/{id}', name: 'obrisi_fakturu')]
+    public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
+
+        $entityManager =  $managerRegistry->getManager();
+        $entityManager->remove($faktura);
+        $entityManager->flush();
+
+        $this->addFlash('poruka','Uspesno obrisana faktura!');
+        return $this->redirectToRoute('sve_fakture');
+    }
+
+
 
 }
