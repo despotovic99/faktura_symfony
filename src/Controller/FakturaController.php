@@ -72,7 +72,7 @@ class FakturaController extends AbstractController {
 
     }
 
-    #[Route('/prikazi/{id}', name: 'prikazi_fakturu')]
+    #[Route('/{id}', name: 'prikazi_fakturu',methods: ['GET'])]
     public function prikaziFakturu(Faktura $faktura) {
 
         return $this->forward('App\Controller\FakturaController::fakturaForma', [
@@ -80,7 +80,7 @@ class FakturaController extends AbstractController {
         ]);
     }
 
-    #[Route('/obrisi/{id}', name: 'obrisi_fakturu')]
+    #[Route('/{id}', name: 'obrisi_fakturu',methods: ['DELETE'])]
     public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
 
         $entityManager =  $managerRegistry->getManager();
