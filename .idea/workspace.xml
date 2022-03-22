@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +184,7 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Docker.FakturaSymfony">
+  <component name="RunManager" selected="HTTP Request.FakturaDelete | #1">
     <configuration name="FakturaDelete | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/FakturaDelete.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -214,7 +212,7 @@
       <option name="presentableId" value="Default" />
       <updated>1647939107493</updated>
       <workItem from="1647939108845" duration="23337000" />
-      <workItem from="1647977060968" duration="1773000" />
+      <workItem from="1647977060968" duration="2142000" />
     </task>
     <servers />
   </component>
