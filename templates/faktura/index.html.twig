@@ -26,9 +26,9 @@
     <div class="example-wrapper">
 
         <div>
-            <a href="{{ path('nova_faktura') }}">Napravi novu fakturu</a>
+            <a class="btn btn-primary" href="{{ path('nova_faktura') }}">Napravi novu fakturu</a>
         </div>
-
+        <br>
         <ul>
             {% for faktura in fakture %}
                 <li>Broj racuna {{ faktura.brojracuna }}</li>
@@ -41,8 +41,8 @@
                 <br>
                 <li>{{ faktura.organizacija.naziv }}</li>
                 <div>
-                    <a href="{{ path('faktura',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
-                    <a href="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}">Obrisi fakturu</a>
+                    <a class="btn btn-success" href="{{ path('faktura',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
+                    <a class="btn btn-danger" href="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}">Obrisi fakturu</a>
                 </div>
                 ---------------------------
             {% endfor %}

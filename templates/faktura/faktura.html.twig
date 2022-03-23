@@ -38,12 +38,12 @@
 
        <div>
            {% if faktura is defined and faktura.id is not empty %}
-               <a href="{{ path('nova_stavka',{'faktura': faktura.id }) }}">Dodaj novu stavku</a>
+               <a class="btn btn-primary" href="{{ path('nova_stavka',{'faktura': faktura.id }) }}">Dodaj novu stavku</a>
            {% endif %}
        </div>
 
       <div>
-          <a href="{{ path('sve_fakture') }}">Sve fakture</a>
+          <a class="btn btn-warning" href="{{ path('sve_fakture') }}">Sve fakture</a>
       </div>
 
   {% endblock %}
