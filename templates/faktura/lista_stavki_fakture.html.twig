@@ -1,0 +1,28 @@
+<table class="table">
+
+    <h2>Stavke fakture</h2>
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Artikl</th>
+        <th scope="col">Kolicina</th>
+
+    </tr>
+    </thead>
+    <tbody>
+{% for stavka in stavke %}
+    {% if stavka  %}
+    <tr>
+        <td scope="row">{{stavka.id}}</td>
+        <td>{{ stavka.nazivartikla }}</td>
+        <td>{{ stavka.kolicina }}</td>
+        <td>
+            <a href="{{ path('rad_sa_stavkom',{'stavka':stavka.id} ) }}">Prikazi </a></td>
+        <td>
+        <td>
+            <a href="{{ path('obrisi_stavku',{'stavka':stavka.id}) }}">Obrisi </a></td>
+    </tr>
+    {% endif %}
+{% endfor %}
+    </tbody>
+</table>

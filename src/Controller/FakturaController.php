@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Faktura;
 use App\Entity\Organizacija;
+use App\Entity\StavkaFakture;
 use App\Form\FakturaType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/faktura')]
 class FakturaController extends AbstractController {
+
     #[Route('/', name: 'sve_fakture')]
     public function index(ManagerRegistry $managerRegistry): Response {
         $fakture = $managerRegistry->getRepository(Faktura::class)->findAll();
@@ -27,8 +29,8 @@ class FakturaController extends AbstractController {
         ]);
     }
 
-    #[Route('/form', name: 'faktura_forma')]
-    public function fakturaForma(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
+    #[Route('/nova', name: 'nova_faktura')]
+    public function novaFaktura(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
@@ -36,11 +38,13 @@ class FakturaController extends AbstractController {
             $faktura = new Faktura();
         }
 
+
         $form = $this->createFormBuilder($faktura)
             ->add('broj_racuna', TextType::class)
             ->add('datum_izdavanja', DateType::class, [
                 'widget' => 'single_text'
             ])
+            //  pitaj kako da ovo uradis na nacin da izolujes formu
             ->add('organizacija', ChoiceType::class, [
                 'choices' => $organizacije,
                 'choice_value' => 'id',
@@ -67,20 +71,19 @@ class FakturaController extends AbstractController {
 
         return $this->render('faktura/faktura.html.twig', [
             'form' => $form->createView(),
-            'faktura'=>$faktura
+            'faktura'=>$faktura,
         ]);
 
     }
 
-    #[Route('/{id}', name: 'faktura',methods: ['GET','POST'])]
+    #[Route('/{faktura}', name: 'faktura',methods: ['GET','POST'])]
     public function radSaFakturom(Faktura $faktura) {
-
-        return $this->forward('App\Controller\FakturaController::fakturaForma', [
+        return $this->forward('App\Controller\FakturaController::novaFaktura', [
             'faktura' => $faktura
         ]);
     }
 
-    #[Route('/{id}', name: 'obrisi_fakturu',methods: ['DELETE'])]
+    #[Route('/obrisi/{faktura}', name: 'obrisi_fakturu')]
     public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
 
         $entityManager =  $managerRegistry->getManager();

@@ -3,10 +3,19 @@
 {% block title %}Sve Fakture{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
     {% for message in app.flashes('poruka') %}
         <div class="flash-notice">
@@ -14,20 +23,29 @@
         </div>
     {% endfor %}
 
-<div class="example-wrapper">
+    <div class="example-wrapper">
 
-    <ul>
-        {% for faktura in fakture %}
-        <li>Broj racuna {{ faktura.brojracuna}}</li>
-            <br>
-            {% for stavka in faktura.stavke %}
-                {{ stavka.nazivartikla }} kolicina:   {{ stavka.kolicina }}
+        <div>
+            <a href="{{ path('nova_faktura') }}">Napravi novu fakturu</a>
+        </div>
+
+        <ul>
+            {% for faktura in fakture %}
+                <li>Broj racuna {{ faktura.brojracuna }}</li>
                 <br>
+                <p>Stavke fakture</p>
+                {% for stavka in faktura.stavke %}
+                    {{ stavka.nazivartikla }} kolicina:   {{ stavka.kolicina }}
+                    <br>
+                {% endfor %}
+                <br>
+                <li>{{ faktura.organizacija.naziv }}</li>
+                <div>
+                    <a href="{{ path('faktura',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
+                    <a href="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}">Obrisi fakturu</a>
+                </div>
+                ---------------------------
             {% endfor %}
-            <br>
-        <li>{{ faktura.organizacija.naziv}}</li>
-          ---------------------------
-        {% endfor %}
-    </ul>
-</div>
+        </ul>
+    </div>
 {% endblock %}

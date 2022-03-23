@@ -34,6 +34,16 @@
 
       {{ form_end(form) }}
 
-      {{ include('faktura/stavke_fakture.html.twig',{'stavke':faktura.stavke}) }}
+      {{ include('faktura/lista_stavki_fakture.html.twig',{'stavke':faktura.stavke}) }}
+
+       <div>
+           {% if faktura is defined and faktura.id is not empty %}
+               <a href="{{ path('nova_stavka',{'faktura': faktura.id }) }}">Dodaj novu stavku</a>
+           {% endif %}
+       </div>
+
+      <div>
+          <a href="{{ path('sve_fakture') }}">Sve fakture</a>
+      </div>
 
   {% endblock %}
