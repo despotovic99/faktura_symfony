@@ -20,6 +20,8 @@ class StavkaFaktureController extends AbstractController {
     #[Route('/nova/{faktura}', name: 'nova_stavka')]
     public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry): Response {
 
+        //todo izmeni imena putanji
+
         if (!$faktura) {
             $this->redirectToRoute('faktura_forma');
         }
@@ -29,6 +31,7 @@ class StavkaFaktureController extends AbstractController {
         if (!$stavka) {
             $stavka = new StavkaFakture();
         }
+
         $form = $this->createForm(StavkaFaktureType::class, $stavka);
         $form->handleRequest($request);
 
@@ -51,7 +54,7 @@ class StavkaFaktureController extends AbstractController {
         }
 
 
-        return $this->render('stavka_fakture/index.html.twig', [
+        return $this->render('faktura/stavka.html.twig', [
             'form' => $form->createView(),
             'faktura' => $faktura
         ]);

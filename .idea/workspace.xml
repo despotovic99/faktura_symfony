@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="Zavrsene CRUD operacije">
+    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="Ubacen bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/stavka_fakture/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/stavka_fakture/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/stavka_fakture/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,6 +188,11 @@
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/faktura" />
+    </key>
+  </component>
   <component name="RunManager" selected="Docker.FakturaSymfony">
     <configuration name="FakturaDelete | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/FakturaDelete.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
@@ -219,7 +222,7 @@
       <updated>1647939107493</updated>
       <workItem from="1647939108845" duration="23337000" />
       <workItem from="1647977060968" duration="2665000" />
-      <workItem from="1648026676128" duration="18299000" />
+      <workItem from="1648026676128" duration="20540000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -235,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648045812766</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ubacen bootstrap">
+      <created>1648046348832</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1648046348832</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +274,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Zavrsene CRUD operacije" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zavrsene CRUD operacije" />
+    <MESSAGE value="Ubacen bootstrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ubacen bootstrap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
