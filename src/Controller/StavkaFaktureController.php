@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('stavka/fakture')]
+#[Route('fakture/{faktura}/stavke')]
 class StavkaFaktureController extends AbstractController {
-    #[Route('/nova/{faktura}', name: 'nova_stavka')]
+    #[Route('/nova', name: 'nova_stavka')]
     public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry): Response {
 
-        //todo izmeni imena putanji
 
         if (!$faktura) {
             $this->redirectToRoute('faktura_forma');
@@ -47,7 +46,7 @@ class StavkaFaktureController extends AbstractController {
 
             $this->addFlash('poruka', "Uspesno sacuvana stavka");
 
-            return $this->redirectToRoute('faktura',[
+            return $this->redirectToRoute('prikazi_fakturu',[
                 'faktura'=>$faktura->getId()
             ]);
 
@@ -60,8 +59,8 @@ class StavkaFaktureController extends AbstractController {
         ]);
     }
 
-    #[Route('/{stavka}', name: 'rad_sa_stavkom')]
-    public function radSaStavkom(StavkaFakture $stavka): Response {
+    #[Route('/{stavka}', name: 'prikazi_stavku')]
+    public function radSaStavkom(Faktura $faktura ,StavkaFakture $stavka): Response {
 
         return $this->forward('App\Controller\StavkaFaktureController::novaStavka', [
             'faktura' => $stavka->getFaktura(),
@@ -71,7 +70,7 @@ class StavkaFaktureController extends AbstractController {
     }
 
 
-    #[Route('/obrisi/{stavka}', name: 'obrisi_stavku')]
+    #[Route('/{stavka}/obrisi', name: 'obrisi_stavku')]
     public function obrisiStavku(StavkaFakture $stavka, ManagerRegistry $managerRegistry) {
 
         $faktura = $stavka->getFaktura();
@@ -81,8 +80,7 @@ class StavkaFaktureController extends AbstractController {
         $entityManager->flush();
 
         $this->addFlash('poruka', 'Uspesno obrisana stavka');
-        return $this->redirectToRoute('faktura', ['faktura' => $faktura->getId()]);
-
+        return $this->redirectToRoute('prikazi_fakturu', ['faktura' => $faktura->getId()]);
 
     }
 

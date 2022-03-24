@@ -17,10 +17,10 @@
         <td>{{ stavka.nazivartikla }}</td>
         <td>{{ stavka.kolicina }}</td>
         <td>
-            <a  class="btn btn-success" href="{{ path('rad_sa_stavkom',{'stavka':stavka.id} ) }}">Prikazi </a></td>
+            <a  class="btn btn-success" href="{{ path('prikazi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id} ) }}">Prikazi </a></td>
         <td>
         <td>
-            <a class=" btn btn-danger" href="{{ path('obrisi_stavku',{'stavka':stavka.id}) }}">Obrisi </a></td>
+            <a class=" btn btn-danger" href="{{ path('obrisi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id}) }}">Obrisi </a></td>
     </tr>
     {% endif %}
 {% endfor %}

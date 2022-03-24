@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/faktura')]
+#[Route('/fakture')]
 class FakturaController extends AbstractController {
 
-    #[Route('/', name: 'sve_fakture')]
+    #[Route('/', name: 'sve_fakture',methods: ['GET'])]
     public function index(ManagerRegistry $managerRegistry): Response {
         $fakture = $managerRegistry->getRepository(Faktura::class)->findAll();
 
@@ -29,7 +29,9 @@ class FakturaController extends AbstractController {
         ]);
     }
 
-    #[Route('/nova', name: 'nova_faktura')]
+
+
+    #[Route('/nova', name: 'nova_faktura', methods: ['GET','POST'])]
     public function novaFaktura(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
@@ -76,14 +78,14 @@ class FakturaController extends AbstractController {
 
     }
 
-    #[Route('/{faktura}', name: 'faktura',methods: ['GET','POST'])]
+    #[Route('/{faktura}', name: 'prikazi_fakturu')]
     public function radSaFakturom(Faktura $faktura) {
         return $this->forward('App\Controller\FakturaController::novaFaktura', [
             'faktura' => $faktura
         ]);
     }
 
-    #[Route('/obrisi/{faktura}', name: 'obrisi_fakturu')]
+    #[Route('/{faktura}/obrisi', name: 'obrisi_fakturu')]
     public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
 
         $entityManager =  $managerRegistry->getManager();

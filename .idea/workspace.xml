@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="Ubacen bootstrap">
+    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="premestena stavka view u faktura folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakturaDelete.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/stavka_fakture/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +226,9 @@
       <updated>1647939107493</updated>
       <workItem from="1647939108845" duration="23337000" />
       <workItem from="1647977060968" duration="2665000" />
-      <workItem from="1648026676128" duration="20540000" />
+      <workItem from="1648026676128" duration="21064000" />
+      <workItem from="1648063595946" duration="599000" />
+      <workItem from="1648110645149" duration="7781000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -245,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648046348832</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="premestena stavka view u faktura folder">
+      <created>1648048750445</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648048750445</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +288,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Zavrsene CRUD operacije" />
     <MESSAGE value="Ubacen bootstrap" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ubacen bootstrap" />
+    <MESSAGE value="premestena stavka view u faktura folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="premestena stavka view u faktura folder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

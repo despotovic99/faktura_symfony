@@ -41,7 +41,7 @@
                 <br>
                 <li>{{ faktura.organizacija.naziv }}</li>
                 <div>
-                    <a class="btn btn-success" href="{{ path('faktura',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
+                    <a class="btn btn-success" href="{{ path('prikazi_fakturu',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
                     <a class="btn btn-danger" href="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}">Obrisi fakturu</a>
                 </div>
                 ---------------------------
