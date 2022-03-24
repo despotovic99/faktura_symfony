@@ -42,7 +42,10 @@
                 <li>{{ faktura.organizacija.naziv }}</li>
                 <div>
                     <a class="btn btn-success" href="{{ path('prikazi_fakturu',{'faktura':faktura.id}) }}">Prikazi fakturu</a>
-                    <a class="btn btn-danger" href="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}">Obrisi fakturu</a>
+                    <form action="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger" type="submit">Obrisi fakturu</button>
+                    </form>
                 </div>
                 ---------------------------
             {% endfor %}

@@ -37,8 +37,6 @@ class FakturaController extends AbstractController {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
-//        $faktura = $session->get('faktura');
-//&& !$session->get('faktura'
         if (!$faktura ) {
             $faktura = new Faktura();
         }
@@ -81,14 +79,14 @@ class FakturaController extends AbstractController {
 
     }
 
-    #[Route('/{faktura}', name: 'prikazi_fakturu')]
+    #[Route('/{faktura}', name: 'prikazi_fakturu' ,methods: ['GET','POST'])]
     public function radSaFakturom(Faktura $faktura) {
         return $this->forward('App\Controller\FakturaController::novaFaktura', [
             'faktura' => $faktura
         ]);
     }
 
-    #[Route('/{faktura}/obrisi', name: 'obrisi_fakturu')]
+    #[Route('/{faktura}', name: 'obrisi_fakturu', methods: ['DELETE'])]
     public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
 
         $entityManager =  $managerRegistry->getManager();
@@ -98,7 +96,6 @@ class FakturaController extends AbstractController {
         $this->addFlash('poruka','Uspesno obrisana faktura!');
         return $this->redirectToRoute('sve_fakture');
     }
-
 
 
 }

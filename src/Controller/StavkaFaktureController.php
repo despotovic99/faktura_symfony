@@ -18,12 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('fakture/{faktura}/stavke')]
 class StavkaFaktureController extends AbstractController {
-    #[Route('/nova', name: 'nova_stavka')]
-    public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry,SessionInterface $session): Response {
+    #[Route('/nova', name: 'nova_stavka', methods: ['GET', 'POST'])]
+    public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry, SessionInterface $session): Response {
 
-
-//&& $faktura->getId()!=$session->get('faktura')->getId()
-        if (!$faktura ) {
+        if (!$faktura) {
             $this->redirectToRoute('faktura_forma');
         }
 
@@ -41,7 +39,6 @@ class StavkaFaktureController extends AbstractController {
             $stavka = $form->getData();
             $faktura->addStavke($stavka);
 
-          //  $session->set('faktura', $faktura);
             $entityManager = $managerRegistry->getManager();
             $entityManager->persist($faktura);
             $entityManager->persist($stavka);
@@ -63,7 +60,7 @@ class StavkaFaktureController extends AbstractController {
         ]);
     }
 
-    #[Route('/{stavka}', name: 'prikazi_stavku',methods: ['GET','POST'])]
+    #[Route('/{stavka}', name: 'prikazi_stavku', methods: ['GET', 'POST'])]
     public function radSaStavkom(Faktura $faktura, StavkaFakture $stavka): Response {
 
         return $this->forward('App\Controller\StavkaFaktureController::novaStavka', [
@@ -74,7 +71,7 @@ class StavkaFaktureController extends AbstractController {
     }
 
 
-    #[Route('/{stavka}', name: 'obrisi_stavku',methods: ['DELETE'])]
+    #[Route('/{stavka}', name: 'obrisi_stavku', methods: ['DELETE'])]
     public function obrisiStavku(StavkaFakture $stavka, ManagerRegistry $managerRegistry) {
 
         $faktura = $stavka->getFaktura();
