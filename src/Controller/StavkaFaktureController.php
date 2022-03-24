@@ -13,15 +13,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('fakture/{faktura}/stavke')]
 class StavkaFaktureController extends AbstractController {
     #[Route('/nova', name: 'nova_stavka')]
-    public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry): Response {
+    public function novaStavka(Faktura $faktura, Request $request, ManagerRegistry $managerRegistry,SessionInterface $session): Response {
 
 
-        if (!$faktura) {
+//&& $faktura->getId()!=$session->get('faktura')->getId()
+        if (!$faktura ) {
             $this->redirectToRoute('faktura_forma');
         }
 
@@ -38,6 +40,8 @@ class StavkaFaktureController extends AbstractController {
             $faktura->removeStavke($stavka);
             $stavka = $form->getData();
             $faktura->addStavke($stavka);
+
+          //  $session->set('faktura', $faktura);
             $entityManager = $managerRegistry->getManager();
             $entityManager->persist($faktura);
             $entityManager->persist($stavka);
@@ -46,8 +50,8 @@ class StavkaFaktureController extends AbstractController {
 
             $this->addFlash('poruka', "Uspesno sacuvana stavka");
 
-            return $this->redirectToRoute('prikazi_fakturu',[
-                'faktura'=>$faktura->getId()
+            return $this->redirectToRoute('prikazi_fakturu', [
+                'faktura' => $faktura->getId()
             ]);
 
         }
@@ -59,8 +63,8 @@ class StavkaFaktureController extends AbstractController {
         ]);
     }
 
-    #[Route('/{stavka}', name: 'prikazi_stavku')]
-    public function radSaStavkom(Faktura $faktura ,StavkaFakture $stavka): Response {
+    #[Route('/{stavka}', name: 'prikazi_stavku',methods: ['GET','POST'])]
+    public function radSaStavkom(Faktura $faktura, StavkaFakture $stavka): Response {
 
         return $this->forward('App\Controller\StavkaFaktureController::novaStavka', [
             'faktura' => $stavka->getFaktura(),
@@ -70,7 +74,7 @@ class StavkaFaktureController extends AbstractController {
     }
 
 
-    #[Route('/{stavka}/obrisi', name: 'obrisi_stavku')]
+    #[Route('/{stavka}', name: 'obrisi_stavku',methods: ['DELETE'])]
     public function obrisiStavku(StavkaFakture $stavka, ManagerRegistry $managerRegistry) {
 
         $faktura = $stavka->getFaktura();

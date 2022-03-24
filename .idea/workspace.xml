@@ -3,14 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="premestena stavka view u faktura folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakturaDelete.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +224,7 @@
       <workItem from="1647977060968" duration="2665000" />
       <workItem from="1648026676128" duration="21064000" />
       <workItem from="1648063595946" duration="599000" />
-      <workItem from="1648110645149" duration="7781000" />
+      <workItem from="1648110645149" duration="12310000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>

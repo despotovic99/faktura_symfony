@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/fakture')]
@@ -32,11 +33,13 @@ class FakturaController extends AbstractController {
 
 
     #[Route('/nova', name: 'nova_faktura', methods: ['GET','POST'])]
-    public function novaFaktura(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
+    public function novaFaktura(?Faktura $faktura,ManagerRegistry $managerRegistry, Request $request,SessionInterface $session): Response {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
-        if (!$faktura) {
+//        $faktura = $session->get('faktura');
+//&& !$session->get('faktura'
+        if (!$faktura ) {
             $faktura = new Faktura();
         }
 

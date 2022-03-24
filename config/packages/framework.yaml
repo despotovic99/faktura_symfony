@@ -2,7 +2,9 @@
 framework:
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
-    http_method_override: false
+#   http_method_override je po default-u setovan na false , postavljanjem na true omogucava se da fejkujemo http zahteve i posaljemo
+#    PUT, DELETE  itd zahteve koristeci  hidden input polje u formi sa name=_method i value=zahtev koji hocemo da posaljemo
+    http_method_override: true
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.

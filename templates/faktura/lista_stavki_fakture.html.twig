@@ -10,19 +10,28 @@
     </tr>
     </thead>
     <tbody>
-{% for stavka in stavke %}
-    {% if stavka  %}
-    <tr>
-        <td scope="row">{{stavka.id}}</td>
-        <td>{{ stavka.nazivartikla }}</td>
-        <td>{{ stavka.kolicina }}</td>
-        <td>
-            <a  class="btn btn-success" href="{{ path('prikazi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id} ) }}">Prikazi </a></td>
-        <td>
-        <td>
-            <a class=" btn btn-danger" href="{{ path('obrisi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id}) }}">Obrisi </a></td>
-    </tr>
-    {% endif %}
-{% endfor %}
+    {% for stavka in stavke %}
+        {% if stavka %}
+            <tr>
+                <td scope="row">{{ stavka.id }}</td>
+                <td>{{ stavka.nazivartikla }}</td>
+                <td>{{ stavka.kolicina }}</td>
+                <td>
+                    {% if stavka.id is not empty %}
+                    <a class="btn btn-success"
+                       href="{{ path('prikazi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id} ) }}">Prikazi </a>
+                </td>
+                <td>
+                    <form action="{{ path('obrisi_stavku',{'faktura':stavka.faktura.id,'stavka':stavka.id}) }} " method="post">
+                        <input type="hidden" name="_method" value="DELETE"/>
+                        <input class="btn btn-danger" type="submit" value="Obrisi"/>
+                    </form>
+                </td>
+                {% else %}
+                <p>stavka je u procesu cuvanja</p>
+                {% endif %}
+            </tr>
+        {% endif %}
+    {% endfor %}
     </tbody>
 </table>
