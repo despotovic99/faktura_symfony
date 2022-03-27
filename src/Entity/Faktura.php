@@ -32,7 +32,7 @@ class Faktura
   //  #[ORM\JoinColumn(nullable: false)]
     private $organizacija;
 
-    #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true,cascade: ['persist'])]
     private $stavke;
 
 

@@ -6,10 +6,13 @@ use App\Entity\Faktura;
 use App\Entity\Organizacija;
 use App\Entity\StavkaFakture;
 use App\Form\FakturaType;
+use App\Form\StavkaFaktureType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/fakture')]
 class FakturaController extends AbstractController {
 
-    #[Route('/', name: 'sve_fakture',methods: ['GET'])]
+    #[Route('/', name: 'sve_fakture', methods: ['GET'])]
     public function index(ManagerRegistry $managerRegistry): Response {
         $fakture = $managerRegistry->getRepository(Faktura::class)->findAll();
 
@@ -31,13 +34,12 @@ class FakturaController extends AbstractController {
     }
 
 
-
-    #[Route('/nova', name: 'nova_faktura', methods: ['GET','POST'])]
-    public function novaFaktura(?Faktura $faktura,ManagerRegistry $managerRegistry, Request $request,SessionInterface $session): Response {
+    #[Route('/nova', name: 'nova_faktura', methods: ['GET', 'POST'])]
+    public function novaFaktura(?Faktura $faktura, ManagerRegistry $managerRegistry, Request $request): Response {
 
         $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
-        if (!$faktura ) {
+        if (!$faktura) {
             $faktura = new Faktura();
         }
 
@@ -54,32 +56,39 @@ class FakturaController extends AbstractController {
                 'choice_label' => function (?Organizacija $organizacija) {
                     return $organizacija ? $organizacija->getNaziv() : '';
                 }
+            ])->add('stavke', CollectionType::class, [
+                'entry_type' => StavkaFaktureType::class,
+                'entry_options' => ['label' => false],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true
             ])
             ->add('sacuvaj', SubmitType::class)
             ->getForm();
+
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $faktura=$form->getData();
+            $faktura = $form->getData();
             $entityManager = $managerRegistry->getManager();
             $entityManager->persist($faktura);
 
             $entityManager->flush();
 
-            $this->addFlash('poruka',"Uspesno sacuvana faktura");
+            $this->addFlash('poruka', "Uspesno sacuvana faktura");
 
         }
 
         return $this->render('faktura/faktura.html.twig', [
             'form' => $form->createView(),
-            'faktura'=>$faktura,
+            'faktura' => $faktura
         ]);
 
     }
 
-    #[Route('/{faktura}', name: 'prikazi_fakturu' ,methods: ['GET','POST'])]
+    #[Route('/{faktura}', name: 'prikazi_fakturu', methods: ['GET', 'POST'])]
     public function radSaFakturom(Faktura $faktura) {
         return $this->forward('App\Controller\FakturaController::novaFaktura', [
             'faktura' => $faktura
@@ -87,13 +96,13 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/{faktura}', name: 'obrisi_fakturu', methods: ['DELETE'])]
-    public function obrisiFakturu(Faktura $faktura,ManagerRegistry $managerRegistry) {
+    public function obrisiFakturu(Faktura $faktura, ManagerRegistry $managerRegistry) {
 
-        $entityManager =  $managerRegistry->getManager();
+        $entityManager = $managerRegistry->getManager();
         $entityManager->remove($faktura);
         $entityManager->flush();
 
-        $this->addFlash('poruka','Uspesno obrisana faktura!');
+        $this->addFlash('poruka', 'Uspesno obrisana faktura!');
         return $this->redirectToRoute('sve_fakture');
     }
 

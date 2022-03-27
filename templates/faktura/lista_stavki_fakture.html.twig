@@ -9,10 +9,10 @@
 
     </tr>
     </thead>
-    <tbody>
+    <tbody id="body_tabele_stavke">
     {% for stavka in stavke %}
         {% if stavka %}
-            <tr>
+            <tr class="stavka-red-lista" id-stavke="{{ stavka.id }}">
                 <td scope="row">{{ stavka.id }}</td>
                 <td>{{ stavka.nazivartikla }}</td>
                 <td>{{ stavka.kolicina }}</td>

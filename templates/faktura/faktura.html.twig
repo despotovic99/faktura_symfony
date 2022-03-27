@@ -1,11 +1,3 @@
-{# <li>Broj racuna {{ faktura.brojracuna}}</li> #}
-{# <br> #}
-{# {% for stavka in faktura.stavke %} #}
-{#    {{ stavka.nazivartikla }} kolicina:   {{ stavka.kolicina }} #}
-{#    <br> #}
-{# {% endfor %} #}
-{# <br> #}
-{# <li>{{ faktura.organizacija.naziv}}</li> #}
 {% extends  'base.html.twig' %}
 
   {% block body %}
@@ -16,6 +8,10 @@
           </div>
       {% endfor %}
       {{ form_start(form) }}
+
+      <h1>
+          Faktura
+      </h1>
 
       <div class="mb-3">
           <label for="broj_racuna" class="form-label">Broj racuna</label>
@@ -32,18 +28,29 @@
           {{ form_widget(form.organizacija) }}
       </div>
 
+      <div id="lista-stavki"  data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
+          <h2>Stavke fakture</h2>
+      {% for stavka in form.stavke %}
+          <div class="mb-3 stavka-panel">
+              {{ form_widget(stavka) }}
+          </div>
+      {% endfor %}
+      </div>
       {{ form_end(form) }}
 
-      {{ include('faktura/lista_stavki_fakture.html.twig',{'stavke':faktura.stavke}) }}
-
-       <div>
-           {% if faktura is defined and faktura.id is not empty %}
-               <a class="btn btn-primary" href="{{ path('nova_stavka',{'faktura': faktura.id }) }}">Dodaj novu stavku</a>
-           {% endif %}
-       </div>
 
       <div>
           <a class="btn btn-warning" href="{{ path('sve_fakture') }}">Sve fakture</a>
       </div>
 
+      <br>
+
+
+
+{% block javascripts %}
+{#    <script src="{{ asset('assets/js/faktura.js') }}"></script>#}
+    {{ encore_entry_script_tags('js/faktura') }}
+{% endblock %}
   {% endblock %}
+
+
