@@ -1,0 +1,18 @@
+{
+  "entrypoints": {
+    "js/faktura": {
+      "js": [
+        "/assets/runtime.js",
+        "/assets/js/faktura.js"
+      ]
+    },
+    "css/faktura": {
+      "js": [
+        "/assets/runtime.js"
+      ],
+      "css": [
+        "/assets/css/faktura.css"
+      ]
+    }
+  }
+}

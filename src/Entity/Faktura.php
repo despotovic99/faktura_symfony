@@ -12,60 +12,52 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FakturaRepository::class)]
 #[ORM\Table(name: 'fakture')]
-#[UniqueEntity('broj_racuna')]
-class Faktura
-{
+#[UniqueEntity('brojRacuna')]
+class Faktura {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 30)]
+    #[ORM\Column(type: 'string', length: 30, name: 'broj_racuna',unique: true)]
     #[Assert\NotBlank(message: 'Unesi broj racuna')]
-    private $broj_racuna;
+    private $brojRacuna;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date',name: 'datum_izdavanja')]
     #[Assert\NotBlank(message: 'Unesi datum izdavanja racuna')]
-    private $datum_izdavanja;
+    private $datumIzdavanja;
 
     #[ORM\ManyToOne(targetEntity: Organizacija::class, inversedBy: 'fakture')]
-  //  #[ORM\JoinColumn(nullable: false)]
     private $organizacija;
 
-    #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true,cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true, cascade: ['persist'])]
     private $stavke;
 
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->stavke = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getBrojRacuna(): ?string
-    {
-        return $this->broj_racuna;
+    public function getBrojRacuna(): ?string {
+        return $this->brojRacuna;
     }
 
-    public function setBrojRacuna(string $broj_racuna): self
-    {
-        $this->broj_racuna = $broj_racuna;
+    public function setBrojRacuna(string $brojRacuna): self {
+        $this->brojRacuna = $brojRacuna;
 
         return $this;
     }
 
-    public function getDatumIzdavanja(): ?\DateTimeInterface
-    {
-        return $this->datum_izdavanja;
+    public function getDatumIzdavanja(): ?\DateTimeInterface {
+        return $this->datumIzdavanja;
     }
 
-    public function setDatumIzdavanja(\DateTimeInterface $datum_izdavanja): self
-    {
-        $this->datum_izdavanja = $datum_izdavanja;
+    public function setDatumIzdavanja(\DateTimeInterface $datumIzdavanja): self {
+        $this->datumIzdavanja = $datumIzdavanja;
 
         return $this;
     }
@@ -73,13 +65,11 @@ class Faktura
     /**
      * @return Collection<int, StavkaFakture>
      */
-    public function getStavke(): Collection
-    {
+    public function getStavke(): Collection {
         return $this->stavke;
     }
 
-    public function addStavke(StavkaFakture $stavke): self
-    {
+    public function addStavke(StavkaFakture $stavke): self {
         if (!$this->stavke->contains($stavke)) {
             $this->stavke[] = $stavke;
             $stavke->setFaktura($this);
@@ -88,8 +78,7 @@ class Faktura
         return $this;
     }
 
-    public function removeStavke(StavkaFakture $stavke): self
-    {
+    public function removeStavke(StavkaFakture $stavke): self {
         if ($this->stavke->removeElement($stavke)) {
             // set the owning side to null (unless already changed)
             if ($stavke->getFaktura() === $this) {
@@ -100,13 +89,11 @@ class Faktura
         return $this;
     }
 
-    public function getOrganizacija(): ?Organizacija
-    {
+    public function getOrganizacija(): ?Organizacija {
         return $this->organizacija;
     }
 
-    public function setOrganizacija(?Organizacija $organizacija): self
-    {
+    public function setOrganizacija(?Organizacija $organizacija): self {
         $this->organizacija = $organizacija;
 
         return $this;

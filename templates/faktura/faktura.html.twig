@@ -7,35 +7,30 @@
               {{ message }}
           </div>
       {% endfor %}
-      {{ form_start(form) }}
+
 
       <h1>
           Faktura
       </h1>
 
-      <div class="mb-3">
-          <label for="broj_racuna" class="form-label">Broj racuna</label>
-          {{ form_widget(form.broj_racuna) }}
-      </div>
+      {{ form_start(form) }}
 
-      <div class="mb-3">
-          <label>Datum izdavanja racuna: </label>
-          {{ form_widget(form.datum_izdavanja) }}
-      </div>
+      {{ form_widget(form.brojRacuna) }}
+      <br>
+      {{ form_widget(form.datumIzdavanja) }}
+      <br>
+      {{ form_widget(form.organizacija) }}
+      <br>
 
-      <div class="mb-3">
-          <label>Organizacija: </label>
-          {{ form_widget(form.organizacija) }}
-      </div>
-
-      <div id="lista-stavki"  data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
-          <h2>Stavke fakture</h2>
-      {% for stavka in form.stavke %}
-          <div class="mb-3 stavka-panel">
-              {{ form_widget(stavka) }}
-          </div>
-      {% endfor %}
-      </div>
+      <h2>Stavke fakture</h2>
+      <ul id="lista-stavki" data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
+          {% for stavka in form.stavke %}
+              <li class="stavka-panel">
+                  {{ form_widget(stavka) }}
+              </li>
+              <br>
+          {% endfor %}
+      </ul>
       {{ form_end(form) }}
 
 
@@ -43,14 +38,10 @@
           <a class="btn btn-warning" href="{{ path('sve_fakture') }}">Sve fakture</a>
       </div>
 
-      <br>
-
-
-
-{% block javascripts %}
-{#    <script src="{{ asset('assets/js/faktura.js') }}"></script>#}
-    {{ encore_entry_script_tags('js/faktura') }}
-{% endblock %}
+      {% block javascripts %}
+          {#    <script src="{{ asset('assets/js/faktura.js') }}"></script> #}
+          {{ encore_entry_script_tags('js/faktura') }}
+      {% endblock %}
   {% endblock %}
 
 

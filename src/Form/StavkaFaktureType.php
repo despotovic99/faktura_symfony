@@ -17,7 +17,10 @@ class StavkaFaktureType extends AbstractType
     {
         $builder
             ->add('naziv_artikla', TextType::class,[
-                'label'=>'Naziv artikla'
+                'label'=>'Naziv artikla',
+                'attr' => array(
+                    'class' => 'col-md-3 col-lg-3 '
+                )
             ])
             ->add('kolicina', NumberType::class,[
                 'label'=>'Kolicina'

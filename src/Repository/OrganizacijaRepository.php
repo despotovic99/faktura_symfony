@@ -14,10 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Organizacija[]    findAll()
  * @method Organizacija[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OrganizacijaRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class OrganizacijaRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Organizacija::class);
     }
 
@@ -25,8 +23,7 @@ class OrganizacijaRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Organizacija $entity, bool $flush = true): void
-    {
+    public function add(Organizacija $entity, bool $flush = true): void {
         $this->_em->persist($entity);
         if ($flush) {
             $this->_em->flush();
@@ -37,8 +34,7 @@ class OrganizacijaRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Organizacija $entity, bool $flush = true): void
-    {
+    public function remove(Organizacija $entity, bool $flush = true): void {
         $this->_em->remove($entity);
         if ($flush) {
             $this->_em->flush();

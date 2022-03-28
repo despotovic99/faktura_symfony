@@ -14,10 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StavkaFakture[]    findAll()
  * @method StavkaFakture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StavkaFaktureRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class StavkaFaktureRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, StavkaFakture::class);
     }
 
@@ -25,8 +23,7 @@ class StavkaFaktureRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(StavkaFakture $entity, bool $flush = true): void
-    {
+    public function add(StavkaFakture $entity, bool $flush = true): void {
         $this->_em->persist($entity);
         if ($flush) {
             $this->_em->flush();
@@ -37,8 +34,7 @@ class StavkaFaktureRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(StavkaFakture $entity, bool $flush = true): void
-    {
+    public function remove(StavkaFakture $entity, bool $flush = true): void {
         $this->_em->remove($entity);
         if ($flush) {
             $this->_em->flush();

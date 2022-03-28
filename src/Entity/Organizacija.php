@@ -8,8 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrganizacijaRepository::class)]
-class Organizacija
-{
+class Organizacija {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -21,23 +20,19 @@ class Organizacija
     #[ORM\OneToMany(mappedBy: 'organizacija', targetEntity: Faktura::class)]
     private $fakture;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->fakture = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getNaziv(): ?string
-    {
+    public function getNaziv(): ?string {
         return $this->naziv;
     }
 
-    public function setNaziv(string $naziv): self
-    {
+    public function setNaziv(string $naziv): self {
         $this->naziv = $naziv;
 
         return $this;
@@ -46,13 +41,11 @@ class Organizacija
     /**
      * @return Collection<int, Faktura>
      */
-    public function getFakture(): Collection
-    {
+    public function getFakture(): Collection {
         return $this->fakture;
     }
 
-    public function addFakture(Faktura $fakture): self
-    {
+    public function addFakture(Faktura $fakture): self {
         if (!$this->fakture->contains($fakture)) {
             $this->fakture[] = $fakture;
             $fakture->setOrganizacija($this);
@@ -61,8 +54,7 @@ class Organizacija
         return $this;
     }
 
-    public function removeFakture(Faktura $fakture): self
-    {
+    public function removeFakture(Faktura $fakture): self {
         if ($this->fakture->removeElement($fakture)) {
             // set the owning side to null (unless already changed)
             if ($fakture->getOrganizacija() === $this) {
@@ -74,7 +66,7 @@ class Organizacija
     }
 
     public function __toString(): string {
-      return $this->getNaziv();
+        return $this->getNaziv();
     }
 
 }

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="premestena stavka view u faktura folder">
+    <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="izmenjena forma fakture ugnjezdena stavka">
+      <change afterPath="$PROJECT_DIR$/assets/js/faktura.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/css/faktura.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/entrypoints.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/faktura.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/runtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2ebe31c7-a9e7-4f78-90de-e2c395ae721e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2ebe31c7-a9e7-4f78-90de-e2c395ae721e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20220324143316.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Faktura.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Faktura.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Organizacija.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Organizacija.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/FakturaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FakturaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/OrganizacijaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/OrganizacijaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/StavkaFaktureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/StavkaFaktureRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +248,8 @@
       <workItem from="1648144896368" duration="15747000" />
       <workItem from="1648239623113" duration="26000" />
       <workItem from="1648310284034" duration="5427000" />
-      <workItem from="1648379024137" duration="6713000" />
+      <workItem from="1648379024137" duration="6874000" />
+      <workItem from="1648451316547" duration="27490000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -266,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648048750445</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="izmenjena forma fakture ugnjezdena stavka">
+      <created>1648418401666</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1648418401666</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +317,8 @@
     <MESSAGE value="Zavrsene CRUD operacije" />
     <MESSAGE value="Ubacen bootstrap" />
     <MESSAGE value="premestena stavka view u faktura folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="premestena stavka view u faktura folder" />
+    <MESSAGE value="izmenjena forma fakture ugnjezdena stavka" />
+    <option name="LAST_COMMIT_MESSAGE" value="izmenjena forma fakture ugnjezdena stavka" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -307,7 +328,18 @@
           <line>19</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Controller/FakturaController.php</url>
+          <line>77</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="index.php">
+        <watch expression="$request-&gt;request-&gt;all()['form']" language="PHP" />
+        <watch expression="$request-&gt;getContent()" language="PHP" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
