@@ -3,25 +3,20 @@
 {% block title %}Sve Fakture{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
+    {{ parent() }}
+    {% block bodyContainer %}
+        <div class="body-container">
 
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-
-    {% for message in app.flashes('poruka') %}
-        <div class="flash-notice">
-            {{ message }}
         </div>
-    {% endfor %}
+    {% endblock %}
+
+    {#    {% for message in app.flashes('poruka') %} #}
+    {#        <div class="flash-notice"> #}
+    {#            {{ message }} #}
+    {#        </div> #}
+    {#    {% endfor %} #}
+
+
 
     <div class="example-wrapper">
 

@@ -57,31 +57,36 @@ class FakturaController extends AbstractController {
 
     #[Route('/sacuvaj', name: 'sacuvaj_fakturu', methods: ['POST'])]
     public function sacuvajFakturu(ManagerRegistry $managerRegistry, Request $request) {
-
+        // todo pitaj kako da nazoves ovakve objekte s kojiima radis "privremeno" da li fakturaForma fakturaZahtev fakturaIzZahteva itd
         $fakturaObjekat = $request->get('form');
         $faktura = $managerRegistry->getRepository(Faktura::class)->find($fakturaObjekat['id']);
 
         if (!$faktura) {
             $faktura = new Faktura();
         }
+
         $entityManager = $managerRegistry->getManager();
+
         $managerRegistry->getConnection()->beginTransaction();
         try {
             $faktura->setBrojRacuna($fakturaObjekat['brojRacuna']);
             $faktura->setDatumIzdavanja(new \DateTime($fakturaObjekat['datumIzdavanja']));
+
             $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaObjekat['organizacija']);
+
             $faktura->setOrganizacija($organizacija);
+
             $faktura->obrisiStavke();
+
             $entityManager->persist($faktura);
             $entityManager->flush();
             $managerRegistry->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $managerRegistry->getConnection()->rollback();
         }
+
         if (isset($fakturaObjekat['stavke'])) {
             foreach ($fakturaObjekat['stavke'] as $stavkaObjekat) {
-                // proveri da li stavka ima id ?
-                // ako ima vrati je iz baze i  azuriraj u suprotnom kreiraj novu
                 $stavka = $entityManager->getRepository(StavkaFakture::class)->find($stavkaObjekat['id']);
                 if (!$stavka) {
                     $stavka = new StavkaFakture();
@@ -90,7 +95,9 @@ class FakturaController extends AbstractController {
                 try {
                     $stavka->setNazivArtikla($stavkaObjekat['naziv_artikla']);
                     $stavka->setKolicina($stavkaObjekat['kolicina']);
+
                     $faktura->addStavke($stavka);
+
                     $entityManager->persist($faktura);
                     $entityManager->flush();
                     $managerRegistry->getConnection()->commit();
