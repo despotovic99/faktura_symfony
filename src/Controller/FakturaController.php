@@ -154,7 +154,7 @@ class FakturaController extends AbstractController {
                 'entry_type' => StavkaFaktureType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => ['class' => 'stavka-forma-class']
+                    'attr' => ['class' => 'stavka-forma-class ']
                 ],
                 'by_reference' => false,
                 'allow_add' => true,
