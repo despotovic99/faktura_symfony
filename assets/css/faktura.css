@@ -7,3 +7,16 @@
     display: flex;
     justify-content: space-between
 }
+.stavka-panel{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    align-items: center;
+}
+.stavka-forma-class{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.stavka-forma-class div{
+    width: 90%;
+}
+

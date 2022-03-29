@@ -40,8 +40,9 @@ function kreirajNovuFormu() {
 
 function dodajObrisiBtn($panel) {
 
-    var obrisiStavkaBtn = $(`<button class="btn btn-danger">Obrisi stavku </button>`);
-
+    var divObrisiStavkaBtn = $(`<div class="obrisi-stavka-btn" style="height: 40px"></div>`)
+    var obrisiStavkaBtn = $(`<button class="btn btn-danger" style="height: 90%" >Obrisi </button>`);
+    divObrisiStavkaBtn.append(obrisiStavkaBtn);
     obrisiStavkaBtn.click(function (e) {
         e.preventDefault();
         $(e.target).parents('.stavka-panel').slideUp(1000, function () {
@@ -49,5 +50,5 @@ function dodajObrisiBtn($panel) {
         })
     });
 
-    $panel.append(obrisiStavkaBtn);
+    $panel.append(divObrisiStavkaBtn);
 }

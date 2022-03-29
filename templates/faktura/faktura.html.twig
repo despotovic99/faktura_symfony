@@ -35,7 +35,8 @@
                     <ul id="lista-stavki" data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
                         {% for stavka in form.stavke %}
                             <li class="stavka-panel">
-                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }}
+{#                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }}#}
+                                {{ form_widget(stavka) }}
                             </li>
                             <br>
                         {% endfor %}

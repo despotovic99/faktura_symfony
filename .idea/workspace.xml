@@ -3,17 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="izmenjena forma fakture ugnjezdena stavka">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/base.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/faktura.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/faktura.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/js/faktura.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/faktura.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +239,7 @@
       <workItem from="1648310284034" duration="5427000" />
       <workItem from="1648379024137" duration="6874000" />
       <workItem from="1648451316547" duration="27967000" />
-      <workItem from="1648538500291" duration="27621000" />
+      <workItem from="1648538500291" duration="29773000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
