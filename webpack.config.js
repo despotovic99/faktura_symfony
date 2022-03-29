@@ -14,6 +14,8 @@ Encore
 
     .addEntry('js/faktura', ['./assets/js/faktura.js'])
     .addStyleEntry('css/faktura', ['./assets/css/faktura.css'])
+    .addStyleEntry('css/base', ['./assets/css/base.css'])
+    .addStyleEntry('css/fakturaIndex', ['./assets/css/fakturaIndex.css'])
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
 

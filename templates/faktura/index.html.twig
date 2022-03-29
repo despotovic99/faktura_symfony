@@ -1,51 +1,68 @@
 {% extends 'base.html.twig' %}
-
+{% block cssStrane %}
+    {{ encore_entry_link_tags('css/fakturaIndex') }}
+{% endblock %}
 {% block title %}Sve Fakture{% endblock %}
 
 {% block body %}
     {{ parent() }}
+{% endblock %}
+
+
     {% block bodyContainer %}
         <div class="body-container">
 
-        </div>
-    {% endblock %}
-
-    {#    {% for message in app.flashes('poruka') %} #}
-    {#        <div class="flash-notice"> #}
-    {#            {{ message }} #}
-    {#        </div> #}
-    {#    {% endfor %} #}
-
-
-
-    <div class="example-wrapper">
-
-        <div>
-            <a class="btn btn-primary" href="{{ path('nova_faktura') }}">Napravi novu fakturu</a>
-        </div>
-        <br>
-        <ul>
-            {% for faktura in fakture %}
-                <li>Broj racuna {{ faktura.brojracuna }}</li>
-                <br>
-                <p>Stavke fakture</p>
-                {% for stavka in faktura.stavke %}
-                    {{ stavka.nazivartikla }} kolicina:   {{ stavka.kolicina }}
-                    <br>
-                {% endfor %}
-                <br>
-                <li>{{ faktura.organizacija.naziv }}</li>
-                <div>
-                    <a class="btn btn-success" href="{{ path('prikazi_fakturu',{'faktura':faktura.id}) }}">Prikazi
-                        fakturu</a>
-                    <form action="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}" method="post">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button class="btn btn-danger" type="submit">Obrisi fakturu</button>
-                    </form>
+            <div class="body-container-header">
+                <div class="body-container-naslov">
+                    <h2>Sve fakture</h2>
                 </div>
-                ---------------------------
-            {% endfor %}
-        </ul>
-    </div>
 
-{% endblock %}
+                <div>
+                    <a class="btn btn-primary" href="{{ path('nova_faktura') }}">Napravi novu fakturu</a>
+                </div>
+            </div>
+
+            <div class="body-container-sadrzaj">
+                <div class="fakture-wrapper row row-cols-1 row-cols-md-2 g-4">
+                    {% for faktura in fakture %}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100" style="width: 28rem;">
+                                <div class="card-body">
+                                    <h6 class="card-title mb-2 text-muted">Broj racuna</h6>
+                                    <h5 class="card-subtitle ">{{ faktura.brojracuna }}</h5>
+                                    <p class="card-text">Organizacija: {{ faktura.organizacija.naziv }}</p>
+                                    <ul class="list-group list-group-flush">
+                                        <h6>Stavke</h6>
+                                        {% for stavka in faktura.stavke %}
+                                            <li class="list-group-item">
+                                                {{ stavka.nazivartikla }} kolicina: {{ stavka.kolicina }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <br>
+                                    <div class="card-text card-buttons">
+                                        <a class="btn btn-success card-link"
+                                           href="{{ path('prikazi_fakturu',{'faktura':faktura.id}) }}">Prikazi
+                                            fakturu</a>
+                                        <form class="card-link"
+                                              action="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}"
+                                              method="post">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button class="btn btn-danger" type="submit">Obrisi fakturu</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <p class="card-text">Datum izdavanja: {{ faktura.datumIzdavanja|date('Y-m-d') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% for message in app.flashes('poruka') %}
+            <script>alert('{{ message }}')</script>
+        {% endfor %}
+    {% endblock %}

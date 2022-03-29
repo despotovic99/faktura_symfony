@@ -36,7 +36,7 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/nova', name: 'nova_faktura', methods: ['GET'])]
-    public function novaFaktura(ManagerRegistry $managerRegistry, Request $request): Response {
+    public function novaFaktura(ManagerRegistry $managerRegistry): Response {
 
         $faktura = new Faktura();
         $form = $this->napraviFormu($managerRegistry, $faktura);
@@ -82,7 +82,10 @@ class FakturaController extends AbstractController {
             $entityManager->flush();
             $managerRegistry->getConnection()->commit();
         } catch (\Throwable $e) {
+        // todo dodaj  flash  ovde message
+            $this->addFlash('poruka','Faktura nije sacuvana!');
             $managerRegistry->getConnection()->rollback();
+            return $this->redirectToRoute('sve_fakture');
         }
 
         if (isset($fakturaObjekat['stavke'])) {
@@ -91,6 +94,13 @@ class FakturaController extends AbstractController {
                 if (!$stavka) {
                     $stavka = new StavkaFakture();
                 }
+
+                if($stavka->getFaktura()!=null && $stavka->getFaktura()->getId()!= $faktura->getId()){
+                // id fakture u stavci nije isti kao id fakture za kokju treba da se veze
+                    // ne izbacujem poruku o gresci
+                    continue;
+                }
+
                 $managerRegistry->getConnection()->beginTransaction();
                 try {
                     $stavka->setNazivArtikla($stavkaObjekat['naziv_artikla']);
@@ -102,11 +112,13 @@ class FakturaController extends AbstractController {
                     $entityManager->flush();
                     $managerRegistry->getConnection()->commit();
                 } catch (\Throwable $e) {
+                    $this->addFlash('poruka',"Problem prilikom cuvanja stavke ".$stavka->getNazivArtikla());
                     $managerRegistry->getConnection()->rollback();
                 }
             }
         }
-        return $this->redirectToRoute('prikazi_fakturu', ['faktura' => $faktura->getId()]);
+        $this->addFlash('poruka',"Uspesno sacuvana faktura");
+        return $this->redirectToRoute('sve_fakture');
     }
 
 
@@ -143,7 +155,7 @@ class FakturaController extends AbstractController {
                 'entry_options' => ['label' => false],
                 'by_reference' => false,
                 'allow_add' => true,
-                'allow_delete' => true
+                'allow_delete' => true,
             ])->add('Sacuvaj_fakturu', SubmitType::class)
             ->getForm();
         return $form;

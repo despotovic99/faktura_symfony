@@ -1248,3 +1248,10 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Tue Mar 29 07:46:09.568563 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
 [Tue Mar 29 07:46:09.568628 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
 [Tue Mar 29 07:57:29.262526 2022] [core:notice] [pid 1] AH00051: child pid 19 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Mar 29 14:13:24.297435 2022] [core:notice] [pid 1] AH00051: child pid 24 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Mar 29 14:13:54.328406 2022] [core:notice] [pid 1] AH00051: child pid 23 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Mar 29 14:28:12.877610 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.4. Set the 'ServerName' directive globally to suppress this message
+[Tue Mar 29 14:28:33.494425 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
+[Tue Mar 29 14:28:33.494475 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Mar 29 15:08:40.151058 2022] [core:notice] [pid 1] AH00051: child pid 22 exit signal Segmentation fault (11), possible coredump in /etc/apache2

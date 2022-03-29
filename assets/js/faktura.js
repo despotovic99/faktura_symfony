@@ -1,12 +1,12 @@
 const $ = require('jquery');
 
 var listaStavkiDiv;
-var dodajStavkuBtn = $(`<button class="btn btn-success">Dodaj stavku </button>`);
+var dodajStavkuBtn = $('#dodajStavkuFaktureBtn');
 
 $(document).ready(function () {
 
     listaStavkiDiv = $('#lista-stavki');
-    listaStavkiDiv.append(dodajStavkuBtn);
+    // listaStavkiDiv.append(dodajStavkuBtn);
     listaStavkiDiv.data('index', listaStavkiDiv.find('.stavka-panel').length)
 
     listaStavkiDiv.find('.stavka-panel').each(function () {
@@ -28,12 +28,13 @@ function kreirajNovuFormu() {
 
     listaStavkiDiv.data('index', index + 1);
 
-
     var $panel = $(` <li class="stavka-panel"></li>`);
-    $panel.append(novaStavkaForm);
-    dodajObrisiBtn($panel);
 
-    dodajStavkuBtn.before($panel);
+    $panel.append(novaStavkaForm);
+
+    dodajObrisiBtn($panel);
+    listaStavkiDiv.append($panel);
+
 }
 
 
