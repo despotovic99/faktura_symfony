@@ -69,6 +69,10 @@ class Faktura {
         return $this->stavke;
     }
 
+    public function obrisiStavke(){
+        $this->stavke= [];
+    }
+
     public function addStavke(StavkaFakture $stavke): self {
         if (!$this->stavke->contains($stavke)) {
             $this->stavke[] = $stavke;

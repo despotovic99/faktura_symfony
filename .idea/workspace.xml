@@ -2,31 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="izmenjena forma fakture ugnjezdena stavka">
-      <change afterPath="$PROJECT_DIR$/assets/js/faktura.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/css/faktura.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/entrypoints.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/faktura.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/runtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2ebe31c7-a9e7-4f78-90de-e2c395ae721e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2ebe31c7-a9e7-4f78-90de-e2c395ae721e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220324143316.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FrontController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/StavkaFaktureController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Faktura.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Faktura.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Organizacija.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Organizacija.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/StavkaFaktureType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/FakturaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FakturaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/OrganizacijaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/OrganizacijaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/StavkaFaktureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/StavkaFaktureRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/lista_stavki_fakture.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/faktura/stavka.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +230,8 @@
       <workItem from="1648239623113" duration="26000" />
       <workItem from="1648310284034" duration="5427000" />
       <workItem from="1648379024137" duration="6874000" />
-      <workItem from="1648451316547" duration="27490000" />
+      <workItem from="1648451316547" duration="27967000" />
+      <workItem from="1648538500291" duration="6916000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -330,8 +312,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Controller/FakturaController.php</url>
-          <line>77</line>
-          <option name="timeStamp" value="27" />
+          <line>61</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

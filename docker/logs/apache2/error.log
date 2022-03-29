@@ -1238,3 +1238,13 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Mon Mar 28 15:11:45.167523 2022] [php:notice] [pid 55] [client 172.19.0.1:49320] 2022-03-28T15:11:45+00:00 [critical] Uncaught Error: syntax error, unexpected token "public", referer: http://localhost/fakture/37
 [Mon Mar 28 15:12:16.656373 2022] [php:notice] [pid 22] [client 172.19.0.1:49322] 2022-03-28T15:12:16+00:00 [critical] Uncaught Error: syntax error, unexpected token "public"
 [Mon Mar 28 15:12:18.665768 2022] [php:notice] [pid 25] [client 172.19.0.1:49324] 2022-03-28T15:12:18+00:00 [critical] Uncaught Error: syntax error, unexpected token "public"
+[Mon Mar 28 18:54:54.559115 2022] [core:notice] [pid 1] AH00051: child pid 55 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Mon Mar 28 19:01:46.494760 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.4. Set the 'ServerName' directive globally to suppress this message
+[Tue Mar 29 07:45:52.352281 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
+[Tue Mar 29 07:45:52.352414 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Mar 29 07:46:01.509409 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Mar 29 07:46:09.568563 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
+[Tue Mar 29 07:46:09.568628 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Mar 29 07:57:29.262526 2022] [core:notice] [pid 1] AH00051: child pid 19 exit signal Segmentation fault (11), possible coredump in /etc/apache2
