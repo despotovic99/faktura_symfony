@@ -23,8 +23,12 @@ function kreirajNovuFormu() {
     var prototype = listaStavkiDiv.data('prototype');
     var index = listaStavkiDiv.data('index');
 
+
+
     var novaStavkaForm = prototype;
     novaStavkaForm = novaStavkaForm.replace(/__name__/g, index);
+
+
 
     listaStavkiDiv.data('index', index + 1);
 

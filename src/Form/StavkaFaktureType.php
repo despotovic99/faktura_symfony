@@ -17,11 +17,11 @@ class StavkaFaktureType extends AbstractType {
         $builder
             ->add('id', HiddenType::class)
             ->add('naziv_artikla', TextType::class, [
-                'label'=>false,
+                'label'=>'naziv artikla',
                 'attr' => ['placeholder'=>'Naziv artikla'],
             ])
             ->add('kolicina', NumberType::class, [
-                'label'=>false,
+                'label'=>'kolicina',
                 'attr' => ['placeholder'=>'Kolicina'],
             ])//            ->add('sacuvaj', ButtonType::class)
         ;

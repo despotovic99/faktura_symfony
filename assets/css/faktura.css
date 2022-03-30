@@ -19,4 +19,8 @@
 .stavka-forma-class div{
     width: 90%;
 }
+.div-btn-submit{
+    display: grid;
+    justify-items: right;
+}
 
