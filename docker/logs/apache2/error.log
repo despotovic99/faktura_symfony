@@ -1255,3 +1255,15 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Tue Mar 29 14:28:33.494425 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
 [Tue Mar 29 14:28:33.494475 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
 [Tue Mar 29 15:08:40.151058 2022] [core:notice] [pid 1] AH00051: child pid 22 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 10:44:53.207559 2022] [core:notice] [pid 1] AH00051: child pid 26 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 11:01:04.314106 2022] [core:notice] [pid 1] AH00051: child pid 20 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 12:37:49.946349 2022] [core:notice] [pid 1] AH00051: child pid 25 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 12:37:50.947800 2022] [core:notice] [pid 1] AH00051: child pid 24 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 12:42:14.223061 2022] [core:notice] [pid 1] AH00051: child pid 29 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 12:42:15.224274 2022] [core:notice] [pid 1] AH00051: child pid 18 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 13:13:56.251463 2022] [core:notice] [pid 1] AH00051: child pid 21 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 13:27:56.092956 2022] [core:notice] [pid 1] AH00051: child pid 27 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 15:06:01.446017 2022] [core:notice] [pid 1] AH00051: child pid 31 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 15:12:36.878034 2022] [core:notice] [pid 1] AH00051: child pid 28 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 15:32:50.126016 2022] [core:notice] [pid 1] AH00051: child pid 34 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Mar 31 16:43:08.659850 2022] [core:notice] [pid 1] AH00051: child pid 19 exit signal Segmentation fault (11), possible coredump in /etc/apache2

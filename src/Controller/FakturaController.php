@@ -4,99 +4,127 @@ namespace App\Controller;
 
 use App\Entity\Faktura;
 use App\Entity\Organizacija;
-use App\Entity\StavkaFakture;
+use App\Form\FakturaType;
+use App\Form\StavkaFaktureType;
+use App\Services\FakturaDatabaseService;
+use App\Services\FakturaStampanjeExcel;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
-class FakturaController {
+#[Route('/fakture')]
+class FakturaController extends AbstractController {
 
-    private $managerRegistry;
+    private FakturaDatabaseService $fakturaController;
 
     public function __construct(ManagerRegistry $managerRegistry) {
-        $this->managerRegistry = $managerRegistry;
+        $this->fakturaController = new FakturaDatabaseService($managerRegistry);
     }
 
-    public function findAll() {
-        return $this->managerRegistry->getRepository(Faktura::class)->findAll();
+    #[Route('/', name: 'sve_fakture', methods: ['GET'])]
+    public function index(): Response {
+        $fakture = $this->fakturaController->findAll();
+
+        $stampa = new FakturaStampanjeExcel();
+
+        return $this->render('faktura/index.html.twig', [
+            'fakture' => $fakture
+        ]);
     }
 
-    public function find($id) {
-        return $this->managerRegistry->getRepository(Faktura::class)->find($id);
+    #[Route('/excel', name: 'excel', methods: ['GET'])]
+    public function excel() {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('hello world.xlsx');
     }
 
-    public function save($fakturaObjekat) {
-        $faktura = $this->managerRegistry->getRepository(Faktura::class)->find($fakturaObjekat['id']);
-        if (!$faktura) {
-            $faktura = new Faktura();
+    #[Route('/nova', name: 'nova_faktura', methods: ['GET'])]
+    public function novaFaktura(ManagerRegistry $managerRegistry): Response {
+
+        $faktura = new Faktura();
+        $form = $this->napraviFormu($managerRegistry, $faktura);
+
+        return $this->render('faktura/faktura.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+    #[Route('/{faktura}', name: 'prikazi_fakturu', methods: ['GET'])]
+    public function radSaFakturom(Faktura $faktura, ManagerRegistry $managerRegistry) {
+        // todo param converterer - ?zameniti metodom pronadji fakturu?
+        $form = $this->napraviFormu($managerRegistry, $faktura);
+        return $this->render('faktura/faktura.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/sacuvaj', name: 'sacuvaj_fakturu', methods: ['POST'])]
+    public function sacuvajFakturu(ManagerRegistry $managerRegistry, Request $request) {
+        $fakturaObjekat = $request->get('form');
+
+        $poruka = $this->fakturaController->save($fakturaObjekat);
+
+        $this->addFlash('poruka', $poruka);
+        return $this->redirectToRoute('sve_fakture');
+    }
+
+
+    #[Route('/{faktura}', name: 'obrisi_fakturu', methods: ['DELETE'])]
+    public function obrisiFakturu(Faktura $faktura) {
+        $poruka = 'Uspesno obrisana faktura!';
+
+        if (!$this->fakturaController->delete($faktura)) {
+            $poruka = 'Problem prilikom brisanja fakture!';
         }
+        $this->addFlash('poruka', $poruka);
+        return $this->redirectToRoute('sve_fakture');
+    }
 
-        $entityManager = $this->managerRegistry->getManager();
+    private function napraviFormu($managerRegistry, $faktura) {
+        $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
 
-        $this->managerRegistry->getConnection()->beginTransaction();
-        try {
-            $faktura->setBrojRacuna($fakturaObjekat['brojRacuna']);
-            $faktura->setDatumIzdavanja(new \DateTime($fakturaObjekat['datumIzdavanja']));
-
-            $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaObjekat['organizacija']);
-
-            $faktura->setOrganizacija($organizacija);
-
-            $faktura->obrisiStavke();
-
-            $entityManager->persist($faktura);
-            $entityManager->flush();
-            $this->managerRegistry->getConnection()->commit();
-        } catch (\Throwable $e) {
-            // todo dodaj  flash  ovde message
-            $this->addFlash('poruka', 'Faktura nije sacuvana!');
-            $this->managerRegistry->getConnection()->rollback();
-            return $this->redirectToRoute('sve_fakture');
-        }
-
-        if (isset($fakturaObjekat['stavke'])) {
-            foreach ($fakturaObjekat['stavke'] as $stavkaObjekat) {
-                $stavka = $entityManager->getRepository(StavkaFakture::class)->find($stavkaObjekat['id']);
-                if (!$stavka) {
-                    $stavka = new StavkaFakture();
+        $form = $this->createFormBuilder($faktura)
+            ->setAction($this->generateUrl('sacuvaj_fakturu'))
+            ->setMethod('POST')
+            ->add('id', HiddenType::class)
+            ->add('brojRacuna', TextType::class)
+            ->add('datumIzdavanja', DateType::class, [
+                'widget' => 'single_text'
+            ])
+            ->add('organizacija', ChoiceType::class, [
+                'choices' => $organizacije,
+                'choice_value' => 'id',
+                'choice_label' => function (?Organizacija $organizacija) {
+                    return $organizacija ? $organizacija->getNaziv() : '';
                 }
+            ])->add('stavke', CollectionType::class, [
+                'entry_type' => StavkaFaktureType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => ['class' => 'stavka-forma-class ']
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
 
-                if ($stavka->getFaktura() != null && $stavka->getFaktura()->getId() != $faktura->getId()) {
-                    // id fakture u stavci nije isti kao id fakture za koju treba da se veze
-                    continue;
-                }
-
-                $this->managerRegistry->getConnection()->beginTransaction();
-                try {
-                    $stavka->setNazivArtikla($stavkaObjekat['naziv_artikla']);
-                    $stavka->setKolicina($stavkaObjekat['kolicina']);
-
-                    $faktura->addStavke($stavka);
-
-                    $entityManager->persist($faktura);
-                    $entityManager->flush();
-                    $this->managerRegistry->getConnection()->commit();
-                } catch (\Throwable $e) {
-                    $this->addFlash('poruka', "Problem prilikom cuvanja stavke " . $stavka->getNazivArtikla());
-                    $this->managerRegistry->getConnection()->rollback();
-                }
-            }
-        }
-
+            ])->add('Sacuvaj_fakturu', SubmitType::class)
+            ->getForm();
+        return $form;
     }
-
-    public function delete(Faktura $faktura) {
-
-        $this->managerRegistry->getConnection()->beginTransaction();
-        try {
-            $entityManager = $this->managerRegistry->getManager();
-            $entityManager->remove($faktura);
-            $entityManager->flush();
-            $this->managerRegistry->getConnection()->commit();
-        } catch (\Throwable $exception) {
-            $this->managerRegistry->getConnection()->rollback();
-            return false;
-        }
-        return true;
-    }
-
 
 }
