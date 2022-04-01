@@ -101,6 +101,9 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "laminas/laminas-escaper": {
+        "version": "2.10.0"
+    },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
     },
@@ -130,6 +133,9 @@
     },
     "phpoffice/phpspreadsheet": {
         "version": "1.22.0"
+    },
+    "phpoffice/phpword": {
+        "version": "0.18.3"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.2.0"

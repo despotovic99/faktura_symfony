@@ -24,10 +24,8 @@ function kreirajNovuFormu() {
     var index = listaStavkiDiv.data('index');
 
 
-
     var novaStavkaForm = prototype;
     novaStavkaForm = novaStavkaForm.replace(/__name__/g, index);
-
 
 
     listaStavkiDiv.data('index', index + 1);
@@ -56,3 +54,14 @@ function dodajObrisiBtn($panel) {
 
     $panel.append(divObrisiStavkaBtn);
 }
+
+
+$("#btn-stapmanje-dialog").click(function () {
+    $('.body-container').hide();
+  $('#stampanje-dialog').show()
+});
+
+$("#btn-otkazi-stampanje").click(function () {
+    $('#stampanje-dialog').hide();
+  $('.body-container').show()
+});

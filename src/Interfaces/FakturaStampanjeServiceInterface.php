@@ -2,8 +2,10 @@
 
 namespace App\Interfaces;
 
+use App\Entity\Faktura;
+
 interface FakturaStampanjeServiceInterface {
 
-    public function stampajFakturu();
+    public  function stampajFakturu(Faktura $faktura):string;
 
 }

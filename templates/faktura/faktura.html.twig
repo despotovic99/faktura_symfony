@@ -3,6 +3,7 @@
     {{ encore_entry_link_tags('css/faktura') }}
 {% endblock %}
 
+
   {% block body %}
       {{ parent() }}
   {% endblock %}
@@ -11,7 +12,14 @@
 
     <div class="body-container">
         <div class="body-container-header">
-            <h1>Faktura</h1>
+            <div>
+                <h1>Faktura</h1>
+            </div>
+            <div class="btn-stampanje-dialog-div">
+                {% if faktura.id is defined %}
+                <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button>
+                {% endif %}
+            </div>
         </div>
         <div class="body-container-sadrzaj">
             <div class="faktura-forma">
@@ -35,7 +43,7 @@
                     <ul id="lista-stavki" data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
                         {% for stavka in form.stavke %}
                             <li class="stavka-panel">
-{#                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }}#}
+                                {#                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }} #}
                                 {{ form_widget(stavka) }}
                             </li>
                         {% endfor %}
@@ -49,7 +57,25 @@
             </div>
         </div>
     </div>
-    {% block javascripts %}
+
+    {% if faktura.id is defined %}
+        <div id="stampanje-dialog" style="display: none">
+            <form action="{{ path('stampanje') }}" method="post">
+                <input type="hidden" name="faktura-id-stampanje" value="{{ faktura.id }}">
+                <h3>Stampanje fakture</h3>
+                <p>Odaberi format dokumenta</p>
+                <input type="radio" name="format-dokumenta" value="Excel" checked>Excel
+                <input type="radio" name="format-dokumenta" value="Word">Word
+                <br>
+                <button type="submit" class="btn btn-outline-success">Stampaj</button>
+                <button type="button" id="btn-otkazi-stampanje" class="btn btn-outline-danger">Vrati se</button>
+            </form>
+        </div>
+
+    {% endif %}
+
+
+    {% block customjavascripts %}
         {#    <script src="{{ asset('assets/js/faktura.js') }}"></script> #}
         {{ encore_entry_script_tags('js/faktura') }}
     {% endblock %}
