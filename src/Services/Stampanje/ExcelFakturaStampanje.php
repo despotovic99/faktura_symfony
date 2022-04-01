@@ -21,7 +21,7 @@ class ExcelFakturaStampanje implements FakturaStampanjeServiceInterface {
             ->setTitle("Faktura")
             ->setSubject("Faktura")
             ->setCategory("fakture");
-        $writer = new Xlsx($spreadsheet);
+
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Faktura');
 

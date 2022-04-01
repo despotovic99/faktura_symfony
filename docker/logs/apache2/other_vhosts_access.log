@@ -8963,3 +8963,4 @@ localhost:80 172.21.0.1 - - [01/Apr/2022:13:21:13 +0000] "GET /_wdt/bb7da6 HTTP/
 localhost:80 172.21.0.1 - - [01/Apr/2022:13:21:48 +0000] "GET /fakture/2 HTTP/1.1" 200 13902 "http://localhost/fakture/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36"
 localhost:80 172.21.0.1 - - [01/Apr/2022:13:21:49 +0000] "GET /_wdt/3d0b1d HTTP/1.1" 200 4619 "http://localhost/fakture/2" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36"
 localhost:80 172.21.0.1 - - [01/Apr/2022:13:22:39 +0000] "-" 408 0 "-" "-"
+localhost:80 172.21.0.1 - - [01/Apr/2022:14:06:47 +0000] "POST /fakture/stampanje HTTP/1.1" 200 7092 "http://localhost/fakture/2" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36"
