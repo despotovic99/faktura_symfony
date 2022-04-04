@@ -3,9 +3,11 @@
 namespace App\Services\Stampanje;
 
 use App\Entity\Faktura;
+use App\Interfaces\FakturaRepository;
+use App\Interfaces\FakturaStampanjeSericeInterace;
 use PhpOffice\PhpWord\PhpWord;
 
-class WordFakturaStampanje implements \App\Interfaces\FakturaStampanjeServiceInterface {
+class WordFakturaStampanje implements FakturaStampanjeSericeInterace {
 
 
     public function stampajFakturu(Faktura $faktura):string {

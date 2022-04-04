@@ -23,7 +23,6 @@ class FakturaDatabaseService {
         return $this->managerRegistry->getRepository(Faktura::class)->find($id);
     }
 
-
     public function delete(Faktura $faktura) {
 
         $this->managerRegistry->getConnection()->beginTransaction();
@@ -39,26 +38,26 @@ class FakturaDatabaseService {
         return true;
     }
 
-    public function save($fakturaObjekat) {
-        $faktura = $this->find($fakturaObjekat['id']);
+    public function save($fakturaSaForme) {
+        $faktura = $this->find($fakturaSaForme['id']);
         if (!$faktura) {
             $faktura = new Faktura();
         }
         $entityManager = $this->managerRegistry->getManager();
 
-        if (isset($fakturaObjekat['stavke']) && !$this->proveraStavki($faktura, $fakturaObjekat['stavke'])) {
+        if (isset($fakturaSaForme['stavke']) && !$this->proveraStavki($faktura, $fakturaSaForme['stavke'])) {
             return 'Fatal error!';
         }
 
         $this->managerRegistry->getConnection()->beginTransaction();
         try {
-            $faktura->setBrojRacuna($fakturaObjekat['brojRacuna']);
-            $faktura->setDatumIzdavanja(new \DateTime($fakturaObjekat['datumIzdavanja']));
+            $faktura->setBrojRacuna($fakturaSaForme['brojRacuna']);
+            $faktura->setDatumIzdavanja(new \DateTime($fakturaSaForme['datumIzdavanja']));
 
-            $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaObjekat['organizacija']);
+            $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaSaForme['organizacija']);
             $faktura->setOrganizacija($organizacija);
 
-            if (!isset($fakturaObjekat['stavke'])) {
+            if (!isset($fakturaSaForme['stavke'])) {
                 $faktura->obrisiStavke();
             }
 
@@ -70,8 +69,8 @@ class FakturaDatabaseService {
             return 'Neuspesno sacuvana faktura';
         }
 
-        if (isset($fakturaObjekat['stavke'])) {
-            $stavkeSaForme = $fakturaObjekat['stavke'];
+        if (isset($fakturaSaForme['stavke'])) {
+            $stavkeSaForme = $fakturaSaForme['stavke'];
             uasort($stavkeSaForme, [$this, 'cmp']);
 
             $stavkeIzBaze = $this->managerRegistry->getRepository(StavkaFakture::class)

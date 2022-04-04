@@ -24,9 +24,17 @@
         <div class="body-container-sadrzaj">
             <div class="faktura-forma">
                 {{ form_start(form) }}
-                {{ form_widget(form.brojRacuna) }}
+                {{ form_row(form.brojRacuna,{
+                    label: 'Broj racuna',
+                    attr:{
+                        placeholder:'Broj racuna'
+                    },
+                    row_attr:{
+                        class: 'form-floating'
+                    }
+                }) }}
                 <br>
-                {{ form_widget(form.datumIzdavanja) }}
+                {{ form_widget(form.datumIzdavanja,) }}
                 <br>
                 {{ form_widget(form.organizacija) }}
                 <br>
@@ -44,7 +52,7 @@
                         {% for stavka in form.stavke %}
                             <li class="stavka-panel">
                                 {#                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }} #}
-                                {{ form_widget(stavka) }}
+                                {{ form_row(stavka) }}
                             </li>
                         {% endfor %}
                     </ul>

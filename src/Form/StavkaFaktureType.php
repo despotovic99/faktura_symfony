@@ -19,10 +19,12 @@ class StavkaFaktureType extends AbstractType {
             ->add('naziv_artikla', TextType::class, [
                 'label'=>'naziv artikla',
                 'attr' => ['placeholder'=>'Naziv artikla'],
+                'row_attr'=>['class'=>'form-floating']
             ])
             ->add('kolicina', NumberType::class, [
                 'label'=>'kolicina',
                 'attr' => ['placeholder'=>'Kolicina'],
+                'row_attr'=>['class'=>'form-floating']
             ])//            ->add('sacuvaj', ButtonType::class)
         ;
     }

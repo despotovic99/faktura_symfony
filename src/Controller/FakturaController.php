@@ -7,8 +7,9 @@ use App\Entity\Organizacija;
 use App\Form\FakturaType;
 use App\Form\StavkaFaktureType;
 use App\Services\FakturaDatabaseService;
+use App\Services\OrganizacijaDatabaseService;
 use App\Services\Stampanje\ExcelFakturaStampanje;
-use App\Services\Stampanje\FakturaStampanje;
+use App\Services\Stampanje\FakturaStampanjeServis;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,15 +25,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/fakture')]
 class FakturaController extends AbstractController {
 
-    private FakturaDatabaseService $fakturaController;
+    private FakturaDatabaseService $fakturaDBServis;
+    private FakturaStampanjeServis $fakturaStampanjeServis;
+    private OrganizacijaDatabaseService $organizacijaDBServis;
 
-    public function __construct(ManagerRegistry $managerRegistry) {
-        $this->fakturaController = new FakturaDatabaseService($managerRegistry);
+    public function __construct(FakturaDatabaseService $fakturaDBServis, FakturaStampanjeServis $fakturaStampanjeServis, OrganizacijaDatabaseService $organizacijaDBServis) {
+        $this->fakturaDBServis = $fakturaDBServis;
+        $this->fakturaStampanjeServis = $fakturaStampanjeServis;
+        $this->organizacijaDBServis = $organizacijaDBServis;
     }
 
     #[Route('/', name: 'sve_fakture', methods: ['GET'])]
     public function index(): Response {
-        $fakture = $this->fakturaController->findAll();
+        $fakture = $this->fakturaDBServis->findAll();
 
         return $this->render('faktura/index.html.twig', [
             'fakture' => $fakture
@@ -40,10 +45,11 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/nova', name: 'nova_faktura', methods: ['GET'])]
-    public function novaFaktura(ManagerRegistry $managerRegistry): Response {
+    public function novaFaktura(): Response {
 
-        $faktura = new Faktura();
-        $form = $this->napraviFormu($managerRegistry, $faktura);
+        $organizacije = $this->organizacijaDBServis->findAll();
+
+        $form = $this->napraviFormu($organizacije,null);
 
         return $this->render('faktura/faktura.html.twig', [
             'form' => $form->createView(),
@@ -52,42 +58,42 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/stampanje', name: 'stampanje', methods: ['POST'])]
-    public function stampanje(Request $request,ManagerRegistry $managerRegistry):Response {
+    public function stampanje(Request $request) {
 
-        $faktura = $managerRegistry->getRepository(Faktura::class)->find($request->get('faktura-id-stampanje'));
+        $idFakture = $request->get('faktura-id-stampanje');
+        $formatStampe = $request->get('format-dokumenta');
 
-        if(!$faktura){
-            $this->addFlash('poruka','Problem sa stampanjem fakture');
-            return $this->index();
+        $file = $this->fakturaStampanjeServis->stampaj($idFakture, $formatStampe);
+
+        if ($file === false) {
+            $this->addFlash('poruka', 'Problem sa stampanjem fakture');
+            return $this->redirectToRoute('prikazi_fakturu',['faktura'=>$idFakture]);
         }
+        $putanja = $this->getParameter('download_directory');
 
-        try{
-            $stampac = new FakturaStampanje($request->get('format-dokumenta'));
-            $file = $stampac->stampaj($faktura);
-            $putanja=$this->getParameter('download_directory');
-            return $this->file($putanja.'/'.$file);
-        }catch (\Throwable $exception){
-            $this->addFlash('poruka','Problem sa stampanjem fakture');
-            return $this->index();
-        }
-
+        return $this->file($putanja . '/' . $file);
     }
 
     #[Route('/{faktura}', name: 'prikazi_fakturu', methods: ['GET'])]
-    public function radSaFakturom(Faktura $faktura, ManagerRegistry $managerRegistry) {
-        // todo param converterer - ?zameniti metodom pronadji fakturu?
-        $form = $this->napraviFormu($managerRegistry, $faktura);
+    public function radSaFakturom(Faktura $faktura) {
+
+        // mozda korisnik ne sme da vidi fakturu
+        $faktura=$this->fakturaDBServis->find($faktura->getId());
+
+        $organizacije=$this->organizacijaDBServis->findAll();
+        $form = $this->napraviFormu($organizacije, $faktura);
+
         return $this->render('faktura/faktura.html.twig', [
             'form' => $form->createView(),
-            'faktura'=>$faktura
+            'faktura' => $faktura
         ]);
     }
 
     #[Route('/sacuvaj', name: 'sacuvaj_fakturu', methods: ['POST'])]
     public function sacuvajFakturu(Request $request) {
-        $fakturaObjekat = $request->get('form');
+        $fakturaSaForme = $request->get('form');
 
-        $poruka = $this->fakturaController->save($fakturaObjekat);
+        $poruka = $this->fakturaDBServis->save($fakturaSaForme);
 
         $this->addFlash('poruka', $poruka);
         return $this->redirectToRoute('sve_fakture');
@@ -98,7 +104,8 @@ class FakturaController extends AbstractController {
     public function obrisiFakturu(Faktura $faktura) {
         $poruka = 'Uspesno obrisana faktura!';
 
-        if (!$this->fakturaController->delete($faktura)) {
+        $result = $this->fakturaDBServis->delete($faktura);
+        if (!$result) {
             $poruka = 'Problem prilikom brisanja fakture!';
         }
         $this->addFlash('poruka', $poruka);
@@ -106,8 +113,11 @@ class FakturaController extends AbstractController {
     }
 
 
-    private function napraviFormu($managerRegistry, $faktura) {
-        $organizacije = $managerRegistry->getRepository(Organizacija::class)->findAll();
+    private function napraviFormu($organizacije, ?Faktura $faktura) {
+
+        if (!$faktura) {
+            $faktura = new Faktura();
+        }
 
         $form = $this->createFormBuilder($faktura)
             ->setAction($this->generateUrl('sacuvaj_fakturu'))
@@ -135,6 +145,7 @@ class FakturaController extends AbstractController {
 
             ])->add('Sacuvaj_fakturu', SubmitType::class)
             ->getForm();
+
         return $form;
     }
 
