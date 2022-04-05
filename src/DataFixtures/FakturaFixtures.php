@@ -30,10 +30,6 @@ class FakturaFixtures extends Fixture implements  DependentFixtureInterface {
         return [
             ['br1', date_create('2020-03-02'), 1],
             ['br2', date_create('2020-05-05'), 1],
-            ['br3', date_create('2020-09-14'), 3],
-            ['br4', date_create('2020-11-29'), 2],
-            ['br5', date_create('2020-12-02'), 3],
-            ['br6', date_create('2020-09-23'), 1],
         ];
     }
 

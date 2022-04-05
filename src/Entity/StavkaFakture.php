@@ -13,8 +13,9 @@ class StavkaFakture
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $naziv_artikla;
+    #[ORM\ManyToOne(targetEntity: Proizvod::class, inversedBy: 'stavkaFaktures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $proizvod;
 
     #[ORM\Column(type: 'integer')]
     private $kolicina;
@@ -23,22 +24,12 @@ class StavkaFakture
     #[ORM\JoinColumn(nullable: false)]
     private $faktura;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNazivArtikla(): ?string
-    {
-        return $this->naziv_artikla;
-    }
-
-    public function setNazivArtikla(string $naziv_artikla): self
-    {
-        $this->naziv_artikla = $naziv_artikla;
-
-        return $this;
-    }
 
     public function getKolicina(): ?int
     {
@@ -60,6 +51,18 @@ class StavkaFakture
     public function setFaktura(?Faktura $faktura): self
     {
         $this->faktura = $faktura;
+
+        return $this;
+    }
+
+    public function getProizvod(): ?Proizvod
+    {
+        return $this->proizvod;
+    }
+
+    public function setProizvod(?Proizvod $proizvod): self
+    {
+        $this->proizvod = $proizvod;
 
         return $this;
     }
