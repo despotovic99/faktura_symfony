@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Faktura;
 use App\Entity\Organizacija;
+use App\Exceptions\StampanjeException;
 use App\Form\FakturaType;
 use App\Form\StavkaFaktureType;
 use App\Services\FakturaDatabaseService;
@@ -37,6 +38,7 @@ class FakturaController extends AbstractController {
 
     #[Route('/', name: 'sve_fakture', methods: ['GET'])]
     public function index(): Response {
+
         $fakture = $this->fakturaDBServis->findAll();
 
         return $this->render('faktura/index.html.twig', [
@@ -49,7 +51,7 @@ class FakturaController extends AbstractController {
 
         $organizacije = $this->organizacijaDBServis->findAll();
 
-        $form = $this->napraviFormu($organizacije,null);
+        $form = $this->napraviFormu($organizacije, null);
 
         return $this->render('faktura/faktura.html.twig', [
             'form' => $form->createView(),
@@ -57,30 +59,13 @@ class FakturaController extends AbstractController {
 
     }
 
-    #[Route('/stampanje', name: 'stampanje', methods: ['POST'])]
-    public function stampanje(Request $request) {
-
-        $idFakture = $request->get('faktura-id-stampanje');
-        $formatStampe = $request->get('format-dokumenta');
-
-        $file = $this->fakturaStampanjeServis->stampaj($idFakture, $formatStampe);
-
-        if ($file === false) {
-            $this->addFlash('poruka', 'Problem sa stampanjem fakture');
-            return $this->redirectToRoute('prikazi_fakturu',['faktura'=>$idFakture]);
-        }
-        $putanja = $this->getParameter('download_directory');
-
-        return $this->file($putanja . '/' . $file);
-    }
-
-    #[Route('/{faktura}', name: 'prikazi_fakturu', methods: ['GET'])]
-    public function radSaFakturom(Faktura $faktura) {
+    #[Route('/{fakturaId}', name: 'prikazi_fakturu', methods: ['GET'], requirements: ['fakturaId' => '\d+'])]
+    public function prikazFakture(int $fakturaId, Request $request) {
 
         // mozda korisnik ne sme da vidi fakturu
-        $faktura=$this->fakturaDBServis->find($faktura->getId());
+        $faktura = $this->fakturaDBServis->find($fakturaId);
 
-        $organizacije=$this->organizacijaDBServis->findAll();
+        $organizacije = $this->organizacijaDBServis->findAll();
         $form = $this->napraviFormu($organizacije, $faktura);
 
         return $this->render('faktura/faktura.html.twig', [
@@ -91,25 +76,51 @@ class FakturaController extends AbstractController {
 
     #[Route('/sacuvaj', name: 'sacuvaj_fakturu', methods: ['POST'])]
     public function sacuvajFakturu(Request $request) {
+
         $fakturaSaForme = $request->get('form');
 
         $poruka = $this->fakturaDBServis->save($fakturaSaForme);
 
         $this->addFlash('poruka', $poruka);
+
         return $this->redirectToRoute('sve_fakture');
     }
 
 
-    #[Route('/{faktura}', name: 'obrisi_fakturu', methods: ['DELETE'])]
-    public function obrisiFakturu(Faktura $faktura) {
+    #[Route('/{$fakturaId}', name: 'obrisi_fakturu', methods: ['DELETE'])]
+    public function obrisiFakturu(int $fakturaId) {
+
+        $faktura = $this->fakturaDBServis->find($fakturaId);
+
         $poruka = 'Uspesno obrisana faktura!';
 
         $result = $this->fakturaDBServis->delete($faktura);
+
         if (!$result) {
             $poruka = 'Problem prilikom brisanja fakture!';
         }
+
         $this->addFlash('poruka', $poruka);
+
         return $this->redirectToRoute('sve_fakture');
+    }
+
+
+    #[Route('/{fakturaId}/{formatStampe}',
+        name: 'stampanje_fakture',
+        methods: ['GET'],
+        requirements: ['fakturaId' => '\d+', 'formatStampe' => 'Excel|Word'])]
+    public function stampanjeFakture(int $fakturaId, string $formatStampe) {
+
+        $file = $this->fakturaStampanjeServis->stampaj($fakturaId, $formatStampe);
+
+        if ($file === false) {
+            throw $this->createNotFoundException('Stampa exception');
+        }
+
+        $putanja = $this->getParameter('download_directory');
+
+        return $this->file($putanja . '/' . $file);
     }
 
 
@@ -137,7 +148,7 @@ class FakturaController extends AbstractController {
                 'entry_type' => StavkaFaktureType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => ['class' => 'stavka-forma-class ']
+                    'attr' => ['class' => 'mb-3 stavka-forma-class ']
                 ],
                 'by_reference' => false,
                 'allow_add' => true,

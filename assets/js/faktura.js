@@ -9,6 +9,7 @@ $(document).ready(function () {
     // listaStavkiDiv.append(dodajStavkuBtn);
     listaStavkiDiv.data('index', listaStavkiDiv.find('.stavka-panel').length)
 
+
     listaStavkiDiv.find('.stavka-panel').each(function () {
         dodajObrisiBtn($(this));
     });
@@ -64,4 +65,10 @@ $("#btn-stapmanje-dialog").click(function () {
 $("#btn-otkazi-stampanje").click(function () {
     $('#stampanje-dialog').hide();
   $('.body-container').show()
+});
+
+$('input[name="formatStampe"]').click(()=>{
+    console.log($('input[name="formatStampe"]:checked').val());
+    $('#form-stampanje').attr('action',$('input[name="formatStampe"]:checked').val())
+
 });

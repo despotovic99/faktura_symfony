@@ -3,13 +3,12 @@
 namespace App\Services\Stampanje;
 
 use App\Entity\Faktura;
-use App\Interfaces\FakturaRepository;
-use App\Interfaces\FakturaStampanjeSericeInterace;
+use App\Interfaces\FakturaStampanjeServiceInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
-class ExcelFakturaStampanje implements FakturaStampanjeSericeInterace {
+class ExcelFakturaStampanje implements FakturaStampanjeServiceInterface {
 
 
     public function stampajFakturu(Faktura $faktura):string {

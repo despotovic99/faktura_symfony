@@ -42,10 +42,10 @@
                                     <br>
                                     <div class="card-text card-buttons">
                                         <a class="btn btn-success card-link"
-                                           href="{{ path('prikazi_fakturu',{'faktura':faktura.id}) }}">Prikazi
+                                           href="{{ path('prikazi_fakturu',{'fakturaId':faktura.id}) }}">Prikazi
                                             fakturu</a>
                                         <form class="card-link"
-                                              action="{{ path('obrisi_fakturu',{'faktura':faktura.id}) }}"
+                                              action="{{ path('obrisi_fakturu',{'fakturaId':faktura.id}) }}"
                                               method="post">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button class="btn btn-danger" type="submit">Obrisi fakturu</button>

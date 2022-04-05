@@ -17,7 +17,7 @@
             </div>
             <div class="btn-stampanje-dialog-div">
                 {% if faktura.id is defined %}
-                <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button>
+                    <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button>
                 {% endif %}
             </div>
         </div>
@@ -68,12 +68,16 @@
 
     {% if faktura.id is defined %}
         <div id="stampanje-dialog" style="display: none">
-            <form action="{{ path('stampanje') }}" method="post">
-                <input type="hidden" name="faktura-id-stampanje" value="{{ faktura.id }}">
+            <form id="form-stampanje"
+                  action="{{ path('stampanje_fakture',
+                      { 'fakturaId' : faktura.id , 'formatStampe':'Excel'}) }}"
+                  method="get">
                 <h3>Stampanje fakture</h3>
                 <p>Odaberi format dokumenta</p>
-                <input type="radio" name="format-dokumenta" value="Excel" checked>Excel
-                <input type="radio" name="format-dokumenta" value="Word">Word
+                <input type="radio"  name="formatStampe" value="{{ path('stampanje_fakture',
+                    { 'fakturaId' : faktura.id , 'formatStampe':'Excel'}) }}" checked>Excel
+                <input type="radio"  name="formatStampe" value="{{ path('stampanje_fakture',
+                    { 'fakturaId' : faktura.id , 'formatStampe':'Word'}) }}">Word
                 <br>
                 <button type="submit" class="btn btn-outline-success">Stampaj</button>
                 <button type="button" id="btn-otkazi-stampanje" class="btn btn-outline-danger">Vrati se</button>
@@ -87,6 +91,9 @@
         {#    <script src="{{ asset('assets/js/faktura.js') }}"></script> #}
         {{ encore_entry_script_tags('js/faktura') }}
     {% endblock %}
+    {% for message in app.flashes('poruka') %}
+        <script>alert('{{ message }}')</script>
+    {% endfor %}
 {% endblock %}
 
 

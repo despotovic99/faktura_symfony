@@ -2,10 +2,7 @@
 
 namespace App\Services\Stampanje;
 
-use App\Entity\Faktura;
-use App\Interfaces\FakturaStampanjeSericeInterace;
 use App\Repository\FakturaRepository;
-use App\Services\Stampanje;
 
 class FakturaStampanjeServis {
 
@@ -21,10 +18,14 @@ class FakturaStampanjeServis {
 
     public function stampaj(int $idFakture, string $formatFakture) {
         $printer = $this->getPrinter($formatFakture);
+
+        if(!$printer){
+            return $printer;
+        }
+
         $faktura = $this->fakturaRepository->find($idFakture);
 
         return $printer->stampajFakturu($faktura);
-
     }
 
     private function getPrinter($type) {
