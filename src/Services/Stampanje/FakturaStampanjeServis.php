@@ -2,6 +2,7 @@
 
 namespace App\Services\Stampanje;
 
+use App\Exceptions\PrinterException;
 use App\Repository\FakturaRepository;
 
 class FakturaStampanjeServis {
@@ -19,9 +20,9 @@ class FakturaStampanjeServis {
     public function stampaj(int $idFakture, string $formatFakture) {
         $printer = $this->getPrinter($formatFakture);
 
-        if(!$printer){
-            return $printer;
-        }
+//        if(!$printer){
+//            return $printer;
+//        }
 
         $faktura = $this->fakturaRepository->find($idFakture);
 
@@ -38,7 +39,7 @@ class FakturaStampanjeServis {
                 $klasa = WordFakturaStampanje::class;
                 break;
             default:
-                return false;
+                throw new PrinterException('Stampac ne postoji');
         }
 
         return new $klasa();

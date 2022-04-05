@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Faktura;
 use App\Entity\Organizacija;
-use App\Exceptions\StampanjeException;
+use App\Exceptions\PrinterException;
 use App\Form\FakturaType;
 use App\Form\StavkaFaktureType;
 use App\Services\FakturaDatabaseService;
@@ -106,16 +106,15 @@ class FakturaController extends AbstractController {
     }
 
 
-    #[Route('/{fakturaId}/{formatStampe}',
-        name: 'stampanje_fakture',
-        methods: ['GET'],
-        requirements: ['fakturaId' => '\d+', 'formatStampe' => 'Excel|Word'])]
+    #[Route('/{fakturaId}/{formatStampe}', name: 'stampanje_fakture', methods: ['GET'], requirements: ['fakturaId' => '\d+'])]
     public function stampanjeFakture(int $fakturaId, string $formatStampe) {
 
-        $file = $this->fakturaStampanjeServis->stampaj($fakturaId, $formatStampe);
+        try {
+            $file = $this->fakturaStampanjeServis->stampaj($fakturaId, $formatStampe);
+        } catch (PrinterException $exception) {
+            $this->addFlash('poruka', $exception->getMessage());
 
-        if ($file === false) {
-            throw $this->createNotFoundException('Stampa exception');
+            return $this->redirectToRoute('prikazi_fakturu', ['fakturaId' => $fakturaId]);
         }
 
         $putanja = $this->getParameter('download_directory');
