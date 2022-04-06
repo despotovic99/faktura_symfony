@@ -17,23 +17,11 @@ $(document).ready(function () {
 });
 dodajStavkuBtn.click(function (e) {
     e.preventDefault();
+    console.log($('#stavke-fakture-container').data('proizvodiselect'))
     let prototip = `
                                      <tr>
                                         <td>
-                                            <select class="stavka-select-class form-select"
-                                                    name="stavka-proizvod-select">
-                                                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
-                                                {% for proizvod in proizvodi %}
-                                                    <option value="{{ proizvod.id }}"
-                                                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
-                                                            data-cenapojedinici="{{ proizvod.cenapojedinici }}"
-                                                            {% if stavka.proizvod.id==proizvod.id %}
-                                                                selected
-                                                            {% endif %}
-                                                    >{{ proizvod.nazivproizvoda }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
+                                        ${$('#stavke-fakture-container').data('proizvodiselect')}
                                         </td>
                                         <td>
                                             <input type="number" class="stavka-kolicina-class form-control"
@@ -49,7 +37,7 @@ dodajStavkuBtn.click(function (e) {
                                     </tr>
         `;
 
-    $('#stavke-ukupno-red').insertBefore(prototip);
+    $('#stavke-table-body').append(prototip)
 })
 
 function kreirajNovuFormu() {

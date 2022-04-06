@@ -50,7 +50,20 @@
                     </div>
                 </div>
 
-                <div class="stavke-fakture-container mt-4">
+                <div class="stavke-fakture-container mt-4" id="stavke-fakture-container" data-proizvodiselect='
+
+                <select class="stavka-select-class form-select"
+                        name="stavka-proizvod-select">
+                    <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                    {% for proizvod in proizvodi %}
+                        <option value="{{ proizvod.id }}"
+                                data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                                data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}
+                        </option>
+                    {% endfor %}
+                </select>
+'>
+
                     <div class="stavke-fakture-container-header row">
                         <div class="col-9">
                             <h2>Stavke fakture</h2>
@@ -71,7 +84,7 @@
                                 <th scope="col"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="stavke-table-body">
                             {% if faktura is defined %}
                                 {% for stavka in faktura.stavke %}
                                     <tr>
@@ -106,12 +119,12 @@
                                 {% endfor %}
                             {% endif %}
                             <tr id="stavke-ukupno-red">
-                                <td >Ukupno</td>
-                                <td ></td>
-                                <td ></td>
-                                <td > </td>
-                                <td > {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
-                                <td ></td>
+                                <td>Ukupno</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td> {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>
