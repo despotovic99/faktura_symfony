@@ -1,7 +1,7 @@
 const $ = require('jquery');
 
-var listaStavkiDiv;
-var dodajStavkuBtn = $('#dodajStavkuFaktureBtn');
+let listaStavkiDiv;
+let dodajStavkuBtn = $('#dodajStavkuFaktureBtn');
 
 $(document).ready(function () {
 
@@ -14,24 +14,56 @@ $(document).ready(function () {
         dodajObrisiBtn($(this));
     });
 
-    dodajStavkuBtn.click(function (e) {
-        e.preventDefault();
-        kreirajNovuFormu();
-    })
 });
+dodajStavkuBtn.click(function (e) {
+    e.preventDefault();
+    let prototip = `
+                                     <tr>
+                                        <td>
+                                            <select class="stavka-select-class form-select"
+                                                    name="stavka-proizvod-select">
+                                                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                                                {% for proizvod in proizvodi %}
+                                                    <option value="{{ proizvod.id }}"
+                                                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                                                            data-cenapojedinici="{{ proizvod.cenapojedinici }}"
+                                                            {% if stavka.proizvod.id==proizvod.id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ proizvod.nazivproizvoda }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="stavka-kolicina-class form-control"
+                                                   name="stavka-kolicina"
+                                                   value="0">
+                                        </td>
+                                        <td class="stavka-jedinica-mere">0</td>
+                                        <td class="stavka-cena">0</td>
+                                        <td class="stavka-ukupno">0</td>
+                                        <td class="btn-ukloni-stavku">
+                                            <button type="button" class="btn btn-danger">X</button>
+                                        </td>
+                                    </tr>
+        `;
+
+    $('#stavke-ukupno-red').insertBefore(prototip);
+})
 
 function kreirajNovuFormu() {
-    var prototype = listaStavkiDiv.data('prototype');
-    var index = listaStavkiDiv.data('index');
+    let prototype = listaStavkiDiv.data('prototype');
+    let index = listaStavkiDiv.data('index');
 
 
-    var novaStavkaForm = prototype;
+    let novaStavkaForm = prototype;
     novaStavkaForm = novaStavkaForm.replace(/__name__/g, index);
 
 
     listaStavkiDiv.data('index', index + 1);
 
-    var $panel = $(` <li class="stavka-panel"></li>`);
+    let $panel = $(` <li class="stavka-panel"></li>`);
 
     $panel.append(novaStavkaForm);
 
@@ -43,8 +75,8 @@ function kreirajNovuFormu() {
 
 function dodajObrisiBtn($panel) {
 
-    var divObrisiStavkaBtn = $(`<div class="obrisi-stavka-btn" style="height: 40px"></div>`)
-    var obrisiStavkaBtn = $(`<button class="btn btn-danger" style="height: 90%" >Obrisi </button>`);
+    let divObrisiStavkaBtn = $(`<div class="obrisi-stavka-btn" style="height: 40px"></div>`)
+    let obrisiStavkaBtn = $(`<button class="btn btn-danger" style="height: 90%" >Obrisi </button>`);
     divObrisiStavkaBtn.append(obrisiStavkaBtn);
     obrisiStavkaBtn.click(function (e) {
         e.preventDefault();
@@ -59,42 +91,47 @@ function dodajObrisiBtn($panel) {
 
 $("#btn-stapmanje-dialog").click(function () {
     $('.body-container').hide();
-  $('#stampanje-dialog').show()
+    $('#stampanje-dialog').show()
 });
 
 $("#btn-otkazi-stampanje").click(function () {
     $('#stampanje-dialog').hide();
-  $('.body-container').show()
+    $('.body-container').show()
 });
 
-$('input[name="formatStampe"]').click(()=>{
+$('input[name="formatStampe"]').click(() => {
     console.log($('input[name="formatStampe"]:checked').val());
-    $('#form-stampanje').attr('action',$('input[name="formatStampe"]:checked').val())
+    $('#form-stampanje').attr('action', $('input[name="formatStampe"]:checked').val())
 
 });
 
-$('.stavka-select-class').on('change',(e)=>{
-    var selectedOption=$(e.target).find(':selected');
-    var jedinicaMereTd = $(e.target).parent().parent().find('.stavka-jedinica-mere')[0];
-    var cenaTd = $(e.target).parent().parent().find('.stavka-cena')[0];
+$('.stavka-select-class').on('change', (e) => {
+    let selectedOption = $(e.target).find(':selected');
+    let jedinicaMereTd = $(e.target).parent().parent().find('.stavka-jedinica-mere')[0];
+    let cenaTd = $(e.target).parent().parent().find('.stavka-cena')[0];
+    let kolicinaTd = $(e.target).parent().parent().find('.stavka-kolicina-class')[0]
+    let ukupnoTd = $(e.target).parent().parent().find('.stavka-ukupno')[0]
 
-    jedinicaMereTd.innerText=selectedOption.data('jm');
-    cenaTd.innerText=selectedOption.data('cenapojedinici');
+    jedinicaMereTd.innerText = selectedOption.data('jm');
+    cenaTd.innerText = selectedOption.data('cenapojedinici');
+    let cena = selectedOption.data('cenapojedinici');
+
+    ukupnoTd.innerText = cena * kolicinaTd.value;
 });
 
-$('.stavka-kolicina-class').keyup((e)=>{
+$('.stavka-kolicina-class').keyup((e) => {
 
-    var inputKolicina = $(e.target)[0].value;
+    let inputKolicina = $(e.target)[0].value;
 
-    var redRoditelj = $(e.target).parent().parent();
-    var cenaTd = redRoditelj.find('.stavka-cena')[0];
-    var ukupnoTd = redRoditelj.find('.stavka-ukupno')[0];
+    let redRoditelj = $(e.target).parent().parent();
+    let cenaTd = redRoditelj.find('.stavka-cena')[0];
+    let ukupnoTd = redRoditelj.find('.stavka-ukupno')[0];
 
 
-    var cena = parseFloat(cenaTd.innerText)
-    try{
-        ukupnoTd.innerText=cena*inputKolicina
-    }catch (exception){
-        ukupnoTd.innerText=0;
+    let cena = parseFloat(cenaTd.innerText)
+    try {
+        ukupnoTd.innerText = cena * inputKolicina
+    } catch (exception) {
+        ukupnoTd.innerText = 0;
     }
 })

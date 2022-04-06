@@ -75,11 +75,12 @@ class FakturaController extends AbstractController {
         $faktura = $this->fakturaDBServis->find($fakturaId);
 
         $organizacije = $this->organizacijaDBServis->findAll();
-        $form = $this->napraviFormu($organizacije, $faktura);
+        $proizvodi=$this->proizvodDBServis->findAll();
 
         return $this->render('faktura/faktura.html.twig', [
-            'form' => $form->createView(),
-            'faktura' => $faktura
+            'faktura' => $faktura,
+            'organizacije' => $organizacije,
+            'proizvodi'=>$proizvodi
         ]);
     }
 

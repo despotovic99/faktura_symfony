@@ -35,7 +35,7 @@
                                         <h6>Stavke</h6>
                                         {% for stavka in faktura.stavke %}
                                             <li class="list-group-item">
-                                                {{ stavka.nazivartikla }} kolicina: {{ stavka.kolicina }}
+                                                {{ stavka.proizvod.nazivproizvoda }} kolicina: {{ stavka.kolicina }}
                                             </li>
                                         {% endfor %}
                                     </ul>

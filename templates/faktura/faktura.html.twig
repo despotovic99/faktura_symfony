@@ -20,7 +20,8 @@
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Datum izdavanja</label>
-                        <input type="date" name="datum_izdavanja" class="form-control">
+                        <input class="form-control" type="date" name="datum_izdavanja"
+                               {% if faktura is defined %}value='{{ faktura.datumizdavanja|date('Y-m-d') }}' {% endif %}>
                     </div>
                     {#                    <div class="btn-stampanje-dialog-div"> #}
                     {#                        {% if faktura.id is defined %} #}
@@ -32,14 +33,18 @@
                 <div class="faktura-form-body row g-3">
                     <div class="col-md-8">
                         <label class="form-label">Broj racuna</label>
-                        <input type="text" name="broj_racuna" class="form-control">
+                        <input type="text" name="broj_racuna" class="form-control"
+                               value="{% if faktura is defined %}{{ faktura.brojracuna }}{% endif %} ">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Organizacija</label>
                         <select class="form-select">
                             <option selected>Obaberi</option>
                             {% for organizacija in organizacije %}
-                                <option value="{{ organizacija.id }}">{{ organizacija.naziv }}</option>
+                                <option value="{{ organizacija.id }}"
+                                        {% if faktura is defined  and  faktura.organizacija.id==organizacija.id %}
+                                selected
+                                        {% endif %}>{{ organizacija.naziv }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -67,32 +72,47 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <select class="stavka-select-class" name="stavka-proizvod-select">
-                                        <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
-                                        {% for proizvod in proizvodi %}
-                                            <option value="{{ proizvod.id }}" data-jm="{{ proizvod.jedinicamere.oznaka }}"
-                                                    data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="stavka-kolicina-class" name="stavka-kolicina">
-                                </td>
-                                <td class="stavka-jedinica-mere">/</td>
-                                <td class="stavka-cena">0</td>
-                                <td class="stavka-ukupno">0</td>
-                                <td class="btn-ukloni-stavku">
-                                    <button  type="button" class="btn btn-danger">X</button>
-                                </td>
-                            </tr>
-
                             {% if faktura is defined %}
                                 {% for stavka in faktura.stavke %}
-
+                                    <tr>
+                                        <td>
+                                            <select class="stavka-select-class form-select"
+                                                    name="stavka-proizvod-select">
+                                                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                                                {% for proizvod in proizvodi %}
+                                                    <option value="{{ proizvod.id }}"
+                                                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                                                            data-cenapojedinici="{{ proizvod.cenapojedinici }}"
+                                                            {% if stavka.proizvod.id==proizvod.id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ proizvod.nazivproizvoda }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="stavka-kolicina-class form-control"
+                                                   name="stavka-kolicina"
+                                                   value="{{ stavka.kolicina }}">
+                                        </td>
+                                        <td class="stavka-jedinica-mere">{{ stavka.proizvod.jedinicamere.oznaka }}</td>
+                                        <td class="stavka-cena">{{ stavka.proizvod.cenapojedinici }}</td>
+                                        <td class="stavka-ukupno">{{ stavka.kolicina* stavka.proizvod.cenapojedinici }}</td>
+                                        <td class="btn-ukloni-stavku">
+                                            <button type="button" class="btn btn-danger">X</button>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                             {% endif %}
+                            <tr id="stavke-ukupno-red">
+                                <td >Ukupno</td>
+                                <td ></td>
+                                <td ></td>
+                                <td > </td>
+                                <td > {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
+                                <td ></td>
+                            </tr>
                             </tbody>
                         </table>
 

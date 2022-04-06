@@ -102,4 +102,13 @@ class Faktura {
 
         return $this;
     }
+
+    public function getUkupanIznos(){
+        $iznos=0;
+        foreach ($this->getStavke() as $stavka){
+            $iznos+=$stavka->getKolicina()*$stavka->getProizvod()->getCenaPoJedinici();
+        }
+        return $iznos;
+    }
+
 }
