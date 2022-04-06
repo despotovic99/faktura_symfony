@@ -49,29 +49,15 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="stavke-fakture-container mt-4" id="stavke-fakture-container" data-proizvodiselect='
-
-                <select class="stavka-select-class form-select"
-                        name="stavka-proizvod-select">
-                    <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
-                    {% for proizvod in proizvodi %}
-                        <option value="{{ proizvod.id }}"
-                                data-jm="{{ proizvod.jedinicamere.oznaka }}"
-                                data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}
-                        </option>
-                    {% endfor %}
-                </select>
-'>
-
-                    <div class="stavke-fakture-container-header row">
-                        <div class="col-9">
-                            <h2>Stavke fakture</h2>
-                        </div>
-                        <div class="col-3 dodaj-stavku-div">
-                            <button id="dodajStavkuFaktureBtn" class="btn btn-success h-80">Dodaj stavku</button>
-                        </div>
+                <div class="stavke-fakture-container mt-4" id="stavke-fakture-container">
+                <div class="stavke-fakture-container-header row">
+                    <div class="col-9">
+                        <h2>Stavke fakture</h2>
                     </div>
+                    <div class="col-3 dodaj-stavku-div">
+                        <button id="dodajStavkuFaktureBtn" class="btn btn-success h-80" type="button">Dodaj stavku</button>
+                    </div>
+                </div>
                     <div class="stavke-fakture-container-body  mt-4">
                         <table class="table">
                             <thead>
@@ -112,8 +98,8 @@
                                         <td class="stavka-jedinica-mere">{{ stavka.proizvod.jedinicamere.oznaka }}</td>
                                         <td class="stavka-cena">{{ stavka.proizvod.cenapojedinici }}</td>
                                         <td class="stavka-ukupno">{{ stavka.kolicina* stavka.proizvod.cenapojedinici }}</td>
-                                        <td class="btn-ukloni-stavku">
-                                            <button type="button" class="btn btn-danger">X</button>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-obrisi-stavku">X</button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -133,7 +119,23 @@
                 </div>
 
             </form>
+
         </div>
+
+
+        <div id="stavke-fakture-template-proizvodi" style="display: none">
+            <select class="stavka-select-class form-select"
+                    name="stavka-proizvod-select">
+                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                {% for proizvod in proizvodi %}
+                    <option value="{{ proizvod.id }}"
+                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                            data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
 
     </div>
 
