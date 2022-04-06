@@ -72,3 +72,29 @@ $('input[name="formatStampe"]').click(()=>{
     $('#form-stampanje').attr('action',$('input[name="formatStampe"]:checked').val())
 
 });
+
+$('.stavka-select-class').on('change',(e)=>{
+    var selectedOption=$(e.target).find(':selected');
+    var jedinicaMereTd = $(e.target).parent().parent().find('.stavka-jedinica-mere')[0];
+    var cenaTd = $(e.target).parent().parent().find('.stavka-cena')[0];
+
+    jedinicaMereTd.innerText=selectedOption.data('jm');
+    cenaTd.innerText=selectedOption.data('cenapojedinici');
+});
+
+$('.stavka-kolicina-class').keyup((e)=>{
+
+    var inputKolicina = $(e.target)[0].value;
+
+    var redRoditelj = $(e.target).parent().parent();
+    var cenaTd = redRoditelj.find('.stavka-cena')[0];
+    var ukupnoTd = redRoditelj.find('.stavka-ukupno')[0];
+
+
+    var cena = parseFloat(cenaTd.innerText)
+    try{
+        ukupnoTd.innerText=cena*inputKolicina
+    }catch (exception){
+        ukupnoTd.innerText=0;
+    }
+})

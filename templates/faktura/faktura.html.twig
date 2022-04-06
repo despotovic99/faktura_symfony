@@ -11,59 +11,97 @@
 {% block bodyContainer %}
 
     <div class="body-container">
-        <div class="body-container-header">
-            <div>
-                <h1>Faktura</h1>
-            </div>
-            <div class="btn-stampanje-dialog-div">
-                {% if faktura.id is defined %}
-                    <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button>
-                {% endif %}
-            </div>
-        </div>
-        <div class="body-container-sadrzaj">
-            <div class="faktura-forma">
-                {{ form_start(form) }}
-                {{ form_row(form.brojRacuna,{
-                    label: 'Broj racuna',
-                    attr:{
-                        placeholder:'Broj racuna'
-                    },
-                    row_attr:{
-                        class: 'form-floating'
-                    }
-                }) }}
-                <br>
-                {{ form_widget(form.datumIzdavanja,) }}
-                <br>
-                {{ form_widget(form.organizacija) }}
-                <br>
 
-                <div class="stavke-form-container">
-                    <div class="stavke-form-container-header">
-                        <div class="stavke-form-container-naslov">
+        <div class="faktura-forma-div ">
+            <form class="faktura-form">
+                <div class="faktura-form-header row ">
+                    <div class="col-8 text-center">
+                        <h1>Faktura</h1>
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label">Datum izdavanja</label>
+                        <input type="date" name="datum_izdavanja" class="form-control">
+                    </div>
+                    {#                    <div class="btn-stampanje-dialog-div"> #}
+                    {#                        {% if faktura.id is defined %} #}
+                    {#                            <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button> #}
+                    {#                        {% endif %} #}
+                    {#                    </div> #}
+                </div>
+
+                <div class="faktura-form-body row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Broj racuna</label>
+                        <input type="text" name="broj_racuna" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Organizacija</label>
+                        <select class="form-select">
+                            <option selected>Obaberi</option>
+                            {% for organizacija in organizacije %}
+                                <option value="{{ organizacija.id }}">{{ organizacija.naziv }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="stavke-fakture-container mt-4">
+                    <div class="stavke-fakture-container-header row">
+                        <div class="col-9">
                             <h2>Stavke fakture</h2>
                         </div>
-                        <div class="stavke-form-container-dodaj-stavku">
-                            <button id="dodajStavkuFaktureBtn" class="btn btn-success">Dodaj stavku</button>
+                        <div class="col-3 dodaj-stavku-div">
+                            <button id="dodajStavkuFaktureBtn" class="btn btn-success h-80">Dodaj stavku</button>
                         </div>
                     </div>
-                    <ul id="lista-stavki" data-prototype="{{ form_widget(form.stavke.vars.prototype)|e('html_attr') }}">
-                        {% for stavka in form.stavke %}
-                            <li class="stavka-panel">
-                                {#                                {{ form_widget(stavka,{ 'attr': {'class': 'stavka-forma-class'} }) }} #}
-                                {{ form_row(stavka) }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="div-btn-submit">
-                    {{ form_widget(form.Sacuvaj_fakturu) }}
-                </div>
-                {{ form_end(form) }}
+                    <div class="stavke-fakture-container-body  mt-4">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">proizvod</th>
+                                <th scope="col">kolicina</th>
+                                <th scope="col">jm</th>
+                                <th scope="col">cena po jedinici</th>
+                                <th scope="col">iznos</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <select class="stavka-select-class" name="stavka-proizvod-select">
+                                        <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                                        {% for proizvod in proizvodi %}
+                                            <option value="{{ proizvod.id }}" data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                                                    data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="stavka-kolicina-class" name="stavka-kolicina">
+                                </td>
+                                <td class="stavka-jedinica-mere">/</td>
+                                <td class="stavka-cena">0</td>
+                                <td class="stavka-ukupno">0</td>
+                                <td class="btn-ukloni-stavku">
+                                    <button  type="button" class="btn btn-danger">X</button>
+                                </td>
+                            </tr>
 
-            </div>
+                            {% if faktura is defined %}
+                                {% for stavka in faktura.stavke %}
+
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </form>
         </div>
+
     </div>
 
     {% if faktura.id is defined %}
@@ -74,9 +112,9 @@
                   method="get">
                 <h3>Stampanje fakture</h3>
                 <p>Odaberi format dokumenta</p>
-                <input type="radio"  name="formatStampe" value="{{ path('stampanje_fakture',
+                <input type="radio" name="formatStampe" value="{{ path('stampanje_fakture',
                     { 'fakturaId' : faktura.id , 'formatStampe':'Excel'}) }}" checked>Excel
-                <input type="radio"  name="formatStampe" value="{{ path('stampanje_fakture',
+                <input type="radio" name="formatStampe" value="{{ path('stampanje_fakture',
                     { 'fakturaId' : faktura.id , 'formatStampe':'Word'}) }}">Word
                 <br>
                 <button type="submit" class="btn btn-outline-success">Stampaj</button>

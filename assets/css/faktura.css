@@ -1,42 +1,23 @@
-.body-container{
+.body-container {
     margin-left: auto;
     margin-right: auto;
     width: 50vw;
 }
-.body-container-header{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-}
-.btn-stampanje-dialog-div{
-    display: grid;
-    justify-items: flex-end;
-}
 
-.stavke-form-container-header{
-    display: flex;
-    justify-content: space-between
-}
-.stavka-panel{
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-    align-items: center;
-}
-.stavka-forma-class{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-.stavka-forma-class div{
-    width: 90%;
-}
-.div-btn-submit{
-    display: grid;
-    justify-items: right;
-}
-
-#stampanje-dialog{
+#stampanje-dialog {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
 }
+
+.btn-stampanje-dialog-div {
+    display: grid;
+    justify-items: flex-end;
+}
+.dodaj-stavku-div{
+    display: flex;
+    align-items: center;
+}
+
+
 

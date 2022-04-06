@@ -26,11 +26,11 @@ class Proizvod
     private $jedinicaMere;
 
     #[ORM\OneToMany(mappedBy: 'proizvod', targetEntity: StavkaFakture::class)]
-    private $stavkaFaktures;
+    private $stavkeFakture;
 
     public function __construct()
     {
-        $this->stavkaFaktures = new ArrayCollection();
+        $this->stavkeFakture = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,15 +77,15 @@ class Proizvod
     /**
      * @return Collection<int, StavkaFakture>
      */
-    public function getStavkaFaktures(): Collection
+    public function getStavkeFakture(): Collection
     {
-        return $this->stavkaFaktures;
+        return $this->stavkeFakture;
     }
 
     public function addStavkaFakture(StavkaFakture $stavkaFakture): self
     {
-        if (!$this->stavkaFaktures->contains($stavkaFakture)) {
-            $this->stavkaFaktures[] = $stavkaFakture;
+        if (!$this->stavkeFakture->contains($stavkaFakture)) {
+            $this->stavkeFakture[] = $stavkaFakture;
             $stavkaFakture->setProizvod($this);
         }
 
@@ -94,7 +94,7 @@ class Proizvod
 
     public function removeStavkaFakture(StavkaFakture $stavkaFakture): self
     {
-        if ($this->stavkaFaktures->removeElement($stavkaFakture)) {
+        if ($this->stavkeFakture->removeElement($stavkaFakture)) {
             // set the owning side to null (unless already changed)
             if ($stavkaFakture->getProizvod() === $this) {
                 $stavkaFakture->setProizvod(null);

@@ -9,6 +9,7 @@ use App\Form\FakturaType;
 use App\Form\StavkaFaktureType;
 use App\Services\FakturaDatabaseService;
 use App\Services\OrganizacijaDatabaseService;
+use App\Services\ProizvodDatabaseService;
 use App\Services\Stampanje\ExcelFakturaStampanje;
 use App\Services\Stampanje\FakturaStampanjeServis;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,11 +30,16 @@ class FakturaController extends AbstractController {
     private FakturaDatabaseService $fakturaDBServis;
     private FakturaStampanjeServis $fakturaStampanjeServis;
     private OrganizacijaDatabaseService $organizacijaDBServis;
+    private ProizvodDatabaseService $proizvodDBServis;
 
-    public function __construct(FakturaDatabaseService $fakturaDBServis, FakturaStampanjeServis $fakturaStampanjeServis, OrganizacijaDatabaseService $organizacijaDBServis) {
+    public function __construct(FakturaDatabaseService      $fakturaDBServis,
+                                FakturaStampanjeServis      $fakturaStampanjeServis,
+                                OrganizacijaDatabaseService $organizacijaDBServis,
+                                ProizvodDatabaseService     $proizvodDBServis) {
         $this->fakturaDBServis = $fakturaDBServis;
         $this->fakturaStampanjeServis = $fakturaStampanjeServis;
         $this->organizacijaDBServis = $organizacijaDBServis;
+        $this->proizvodDBServis = $proizvodDBServis;
     }
 
     #[Route('/', name: 'sve_fakture', methods: ['GET'])]
@@ -50,11 +56,14 @@ class FakturaController extends AbstractController {
     public function novaFaktura(): Response {
 
         $organizacije = $this->organizacijaDBServis->findAll();
+        $proizvodi=$this->proizvodDBServis->findAll();
 
-        $form = $this->napraviFormu($organizacije, null);
+//        $form = $this->napraviFormu($organizacije, null);
 
         return $this->render('faktura/faktura.html.twig', [
-            'form' => $form->createView(),
+//            'form' => $form->createView(),
+            'organizacije' => $organizacije,
+            'proizvodi'=>$proizvodi
         ]);
 
     }
