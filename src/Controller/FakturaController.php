@@ -139,40 +139,4 @@ class FakturaController extends AbstractController {
     }
 
 
-    private function napraviFormu($organizacije, ?Faktura $faktura) {
-
-        if (!$faktura) {
-            $faktura = new Faktura();
-        }
-
-        $form = $this->createFormBuilder($faktura)
-            ->setAction($this->generateUrl('sacuvaj_fakturu'))
-            ->setMethod('POST')
-            ->add('id', HiddenType::class)
-            ->add('brojRacuna', TextType::class)
-            ->add('datumIzdavanja', DateType::class, [
-                'widget' => 'single_text'
-            ])
-            ->add('organizacija', ChoiceType::class, [
-                'choices' => $organizacije,
-                'choice_value' => 'id',
-                'choice_label' => function (?Organizacija $organizacija) {
-                    return $organizacija ? $organizacija->getNaziv() : '';
-                }
-            ])->add('stavke', CollectionType::class, [
-                'entry_type' => StavkaFaktureType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => ['class' => 'mb-3 stavka-forma-class ']
-                ],
-                'by_reference' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-
-            ])->add('Sacuvaj_fakturu', SubmitType::class)
-            ->getForm();
-
-        return $form;
-    }
-
 }

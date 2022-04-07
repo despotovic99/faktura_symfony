@@ -106,7 +106,6 @@ $('#dodajStavkuFaktureBtn').click(function (e) {
 })
 
 
-
 $("#btn-stapmanje-dialog").click(function () {
     $('.body-container').hide();
     $('#stampanje-dialog').show()
