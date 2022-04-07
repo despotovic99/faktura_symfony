@@ -1984,3 +1984,11 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Thu Apr 07 07:48:05.548083 2022] [php:notice] [pid 17] [client 172.21.0.1:42116] Xdebug: [Step Debug] Could not connect to debugging client. Tried: 172.21.0.1:9003 (from REMOTE_ADDR HTTP header), host.docker.internal:9003 (fallback through xdebug.client_host/xdebug.client_port) :-(, referer: http://localhost/fakture/1
 [Thu Apr 07 07:48:05.615167 2022] [php:notice] [pid 17] [client 172.21.0.1:42116] Xdebug: [Step Debug] Could not connect to debugging client. Tried: 172.21.0.1:9003 (from REMOTE_ADDR HTTP header), host.docker.internal:9003 (fallback through xdebug.client_host/xdebug.client_port) :-(, referer: http://localhost/fakture/1
 [Thu Apr 07 07:48:05.683358 2022] [php:notice] [pid 17] [client 172.21.0.1:42116] Xdebug: [Step Debug] Could not connect to debugging client. Tried: 172.21.0.1:9003 (from REMOTE_ADDR HTTP header), host.docker.internal:9003 (fallback through xdebug.client_host/xdebug.client_port) :-(, referer: http://localhost/fakture/1
+[Thu Apr 07 12:01:28.584977 2022] [core:notice] [pid 1] AH00051: child pid 20 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:21:46.976597 2022] [core:notice] [pid 1] AH00051: child pid 19 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:23:14.067220 2022] [core:notice] [pid 1] AH00051: child pid 17 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:24:07.121241 2022] [core:notice] [pid 1] AH00051: child pid 18 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:37:09.941160 2022] [core:notice] [pid 1] AH00051: child pid 23 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:37:13.945969 2022] [core:notice] [pid 1] AH00051: child pid 22 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 12:38:06.999756 2022] [core:notice] [pid 1] AH00051: child pid 27 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Thu Apr 07 13:04:07.699821 2022] [core:notice] [pid 1] AH00051: child pid 28 exit signal Segmentation fault (11), possible coredump in /etc/apache2

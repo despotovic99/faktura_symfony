@@ -87,9 +87,15 @@ class FakturaController extends AbstractController {
     #[Route('/sacuvaj', name: 'sacuvaj_fakturu', methods: ['POST'])]
     public function sacuvajFakturu(Request $request) {
 
-        $fakturaSaForme = $request->get('form');
+        $faktura = [
+            'id'=>$request->get('id_fakture'),
+            'broj_racuna'=>$request->get('broj_racuna'),
+            'datum_izdavanja'=>$request->get('datum_izdavanja'),
+            'organizacija'=>$request->get('organizacija'),
+            'stavke'=>$request->get('stavke'),
+        ];
 
-        $poruka = $this->fakturaDBServis->save($fakturaSaForme);
+        $poruka = $this->fakturaDBServis->save($faktura);
 
         $this->addFlash('poruka', $poruka);
 

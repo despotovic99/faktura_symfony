@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entity\Faktura;
 use App\Entity\Organizacija;
+use App\Entity\Proizvod;
 use App\Entity\StavkaFakture;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -51,8 +52,8 @@ class FakturaDatabaseService {
 
         $this->managerRegistry->getConnection()->beginTransaction();
         try {
-            $faktura->setBrojRacuna($fakturaSaForme['brojRacuna']);
-            $faktura->setDatumIzdavanja(new \DateTime($fakturaSaForme['datumIzdavanja']));
+            $faktura->setBrojRacuna($fakturaSaForme['broj_racuna']);
+            $faktura->setDatumIzdavanja(new \DateTime($fakturaSaForme['datum_izdavanja']));
 
             $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaSaForme['organizacija']);
             $faktura->setOrganizacija($organizacija);
@@ -71,7 +72,7 @@ class FakturaDatabaseService {
 
         if (isset($fakturaSaForme['stavke'])) {
             $stavkeSaForme = $fakturaSaForme['stavke'];
-            uasort($stavkeSaForme, [$this, 'cmp']);
+            uasort($stavkeSaForme, [$this, 'uporediElemente']);
 
             $stavkeIzBaze = $this->managerRegistry->getRepository(StavkaFakture::class)
                 ->findBy(['faktura' => $faktura->getId()], ['id' => 'ASC']);
@@ -87,19 +88,21 @@ class FakturaDatabaseService {
             for ($i = 0; $i <= $duzina; $i++) {
                 $this->managerRegistry->getConnection()->beginTransaction();
                 try {
-                    if ($pomocnaStavkaForma != null && $pomocnaStavkaForma['id'] == '') {
+                    if ($pomocnaStavkaForma != null && $pomocnaStavkaForma['stavka_id'] == '') {
                         $pomocnaNova = $pomocnaStavkaForma;
                         $pomocnaStavkaForma = array_shift($stavkeSaForme);
 
                         $novaStavka = new StavkaFakture();
-                        $novaStavka->setNazivArtikla($pomocnaNova['naziv_artikla']);
+                        $proizvod = $this->managerRegistry->getRepository(Proizvod::class)
+                            ->find($pomocnaNova['stavka_proizvod']);
+                        $novaStavka->setProizvod($proizvod);
                         $novaStavka->setKolicina($pomocnaNova['kolicina']);
                         $novaStavka->setFaktura($faktura);
 
 
                         $entityManager->persist($novaStavka);
                     } elseif ($pomocnaStavkaForma == null ||
-                        ($pomocnaStavkaBaza != null && $pomocnaStavkaForma['id'] > $pomocnaStavkaBaza->getId())) {
+                        ($pomocnaStavkaBaza != null && $pomocnaStavkaForma['stavka_id'] > $pomocnaStavkaBaza->getId())) {
 
                         $stavka = $pomocnaStavkaBaza;
 
@@ -109,7 +112,7 @@ class FakturaDatabaseService {
 
                     } elseif ($pomocnaStavkaForma != null &&
                         $pomocnaStavkaBaza != null &&
-                        $pomocnaStavkaForma['id'] == $pomocnaStavkaBaza->getId()) {
+                        $pomocnaStavkaForma['stavka_id'] == $pomocnaStavkaBaza->getId()) {
 
                         $stavkaSaVrednostima = $pomocnaStavkaForma;
                         $stavka = $pomocnaStavkaBaza;
@@ -117,7 +120,8 @@ class FakturaDatabaseService {
                         $pomocnaStavkaForma = array_shift($stavkeSaForme);
                         $pomocnaStavkaBaza = array_shift($stavkeIzBaze);
 
-                        $stavka->setNazivArtikla($stavkaSaVrednostima['naziv_artikla']);
+                        $proizvod = $this->managerRegistry->getRepository(Proizvod::class)->find($stavkaSaVrednostima['stavka_proizvod']);
+                        $stavka->setProizvod($proizvod);
                         $stavka->setKolicina($stavkaSaVrednostima['kolicina']);
 
                         $entityManager->persist($stavka);
@@ -135,8 +139,8 @@ class FakturaDatabaseService {
 
     private function proveraStavki($faktura, $stavke): bool {
         foreach ($stavke as $stavka) {
-            $stavkaBaza = $this->managerRegistry->getRepository(StavkaFakture::class)->find($stavka['id']);
-            if ((!$stavkaBaza && !empty($stavka['id'])) ||
+            $stavkaBaza = $this->managerRegistry->getRepository(StavkaFakture::class)->find($stavka['stavka_id']);
+            if ((!$stavkaBaza && !empty($stavka['stavka_id'])) ||
                 $stavkaBaza &&
                 $stavkaBaza->getFaktura() != null &&
                 $stavkaBaza->getFaktura()->getId() != $faktura->getId()) {
@@ -146,10 +150,10 @@ class FakturaDatabaseService {
         return true;
     }
 
-    function cmp($a, $b) {
-        if ($a['id'] == $b['id']) {
+    function uporediElemente($a, $b) {
+        if ($a['stavka_id'] == $b['stavka_id']) {
             return 0;
         }
-        return ($a['id'] < $b['id']) ? -1 : 1;
+        return ($a['stavka_id'] < $b['stavka_id']) ? -1 : 1;
     }
 }

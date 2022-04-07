@@ -66,19 +66,20 @@ $('.btn-obrisi-stavku').on('click', brisanjeStavke);
 $('#dodajStavkuFaktureBtn').click(function (e) {
     e.preventDefault();
 
-    let prototip = $(`<tr></tr>`);
+    let indeksStavke = parseFloat($('#stavke-table-body').attr('brojStavki'))+1;
+    $('#stavke-table-body').attr('brojStavki',indeksStavke);
+    let prototip = $(`<tr><input type="hidden" name="stavke[${indeksStavke}][stavka_id]"></tr>`);
 
     let td = $(`<td></td>`);
     let selectProizvodi = $('#stavke-fakture-template-proizvodi').find('select').clone();
-
-
+    selectProizvodi.attr('name',`stavke[${indeksStavke}][stavka_proizvod]`);
     selectProizvodi.change(azurirajVrednostiReda)
     td.append(selectProizvodi);
     prototip.append(td);
 
     td = $(`<td></td>`);
     let inputKolicina = $(` <input type="number" class="stavka-kolicina-class form-control"
-                                                   name="stavka-kolicina"
+                                                   name="stavke[${indeksStavke}][kolicina]"
                                                    value="0"
                                                    min="0"
                                                    oninput="validity.valid||(value='')">`)

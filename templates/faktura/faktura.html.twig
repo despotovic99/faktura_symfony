@@ -12,7 +12,8 @@
     <div class="body-container">
 
         <div class="faktura-forma-div ">
-            <form class="faktura-form">
+            <form class="faktura-form" method="post" action="{{ path('sacuvaj_fakturu') }}">
+                <input type="hidden" name="id_fakture" value=" {% if faktura is defined %}{{ faktura.id }}{% endif %}">
                 <div class="faktura-form-header row ">
                     <div class="col-8 text-center">
                         <h1>Faktura</h1>
@@ -22,11 +23,6 @@
                         <input class="form-control" type="date" name="datum_izdavanja"
                                {% if faktura is defined %}value='{{ faktura.datumizdavanja|date('Y-m-d') }}' {% endif %}>
                     </div>
-                    {#                    <div class="btn-stampanje-dialog-div"> #}
-                    {#                        {% if faktura.id is defined %} #}
-                    {#                            <button id="btn-stapmanje-dialog" class="btn btn-outline-success">Stampaj</button> #}
-                    {#                        {% endif %} #}
-                    {#                    </div> #}
                 </div>
 
                 <div class="faktura-form-body row g-3">
@@ -37,7 +33,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Organizacija</label>
-                        <select class="form-select">
+                        <select class="form-select" name="organizacija">
                             <option selected>Obaberi</option>
                             {% for organizacija in organizacije %}
                                 <option value="{{ organizacija.id }}"
@@ -70,13 +66,14 @@
                                 <th scope="col"></th>
                             </tr>
                             </thead>
-                            <tbody id="stavke-table-body">
+                            <tbody id="stavke-table-body" brojStavki="{% if faktura is defined %}{{ faktura.stavke|length }}{% else %}0{% endif %}">
                             {% if faktura is defined %}
                                 {% for stavka in faktura.stavke %}
                                     <tr>
+                                            <input type="hidden" name="stavke[{{ loop.index }}][stavka_id]" value="{{ stavka.id }}">
                                         <td>
                                             <select class="stavka-select-class form-select"
-                                                    name="stavka-proizvod-select">
+                                                    name="stavke[{{ loop.index }}][stavka_proizvod]">
                                                 <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
                                                 {% for proizvod in proizvodi %}
                                                     <option value="{{ proizvod.id }}"
@@ -92,7 +89,7 @@
                                         </td>
                                         <td>
                                             <input type="number" class="stavka-kolicina-class form-control"
-                                                   name="stavka-kolicina"
+                                                   name="stavke[{{ loop.index }}][kolicina]"
                                                    value="{{ stavka.kolicina }}"
                                                    min="0"
                                                    oninput="validity.valid||(value='')">
@@ -111,7 +108,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td  id="ukupan-iznos-fakture"> {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
+                                <td id="ukupan-iznos-fakture"> {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -122,13 +119,18 @@
 
                 <div class="faktura-form-buttons d-flex justify-content-end ">
                     <div class="btn-otkazi p-2">
-                        <button class="btn btn-outline-danger" type="button">Otkazi</button>
+                        <button class="btn btn-danger" type="button">Otkazi</button>
                     </div>
                     <div class="btn-reset p-2">
-                        <button class="btn btn-outline-secondary" type="reset">Reset</button>
+                        <button class="btn btn-secondary" type="reset">Reset</button>
+                    </div>
+                    <div class="btn-print p-2">
+                        {% if faktura.id is defined %}
+                            <button id="btn-stapmanje-dialog" type="button" class="btn btn-warning">Stampaj</button>
+                        {% endif %}
                     </div>
                     <div class="btn-submit p-2">
-                        <button class="btn btn-outline-success" type="submit">Sacuvaj</button>
+                        <button class="btn btn-success" type="submit">Sacuvaj</button>
                     </div>
                 </div>
 
@@ -139,7 +141,7 @@
 
         <div id="stavke-fakture-template-proizvodi" style="display: none">
             <select class="stavka-select-class form-select"
-                    name="stavka-proizvod-select">
+                    name="">
                 <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
                 {% for proizvod in proizvodi %}
                     <option value="{{ proizvod.id }}"

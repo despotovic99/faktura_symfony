@@ -22,10 +22,6 @@ input[type=number] {
     margin-right: auto;
 }
 
-.btn-stampanje-dialog-div {
-    display: grid;
-    justify-items: flex-end;
-}
 .dodaj-stavku-div{
     display: flex;
     align-items: center;
