@@ -1,6 +1,6 @@
 const $ = require('jquery');
 
-$('.stavka-select-class').on('change', (e) => {
+function azurirajVrednostiReda(e) {
     let selectedOption = $(e.target).find(':selected');
 
     let trRoditelj = selectedOption.parents('tr');
@@ -8,7 +8,7 @@ $('.stavka-select-class').on('change', (e) => {
     let jedinicaMereTd = trRoditelj.find('.stavka-jedinica-mere');
     let cenaTd = trRoditelj.find('.stavka-cena')
     let kolicinaTd = trRoditelj.find('.stavka-kolicina-class')
-    let ukupnoTd = trRoditelj.find('.stavka-ukupno')
+    let ukupnoTd = trRoditelj.find('.stavka-iznos')
 
     jedinicaMereTd.html(selectedOption.data('jm'));
     cenaTd.html(selectedOption.data('cenapojedinici'))
@@ -16,56 +16,95 @@ $('.stavka-select-class').on('change', (e) => {
     let cena = selectedOption.data('cenapojedinici');
     let kolicina = parseFloat(kolicinaTd.val())
 
-    ukupnoTd.html(cena * kolicina)
-});
+    ukupnoTd.html((cena * kolicina).toFixed(2))
+    azurirajIznosUkupnoNaFakturi()
+}
 
-$('.stavka-kolicina-class').keyup((e) => {
+function azurirajIznosURedu(e) {
+    let inputKolicina = $(e.target).val();
 
-    let inputKolicina = $(e.target)[0].value;
+    let redRoditelj = $(e.target).parents('tr');
+    let cenaTd = redRoditelj.find('.stavka-cena');
+    let ukupnoTd = redRoditelj.find('.stavka-iznos');
 
-    let redRoditelj = $(e.target).parent().parent();
-    let cenaTd = redRoditelj.find('.stavka-cena')[0];
-    let ukupnoTd = redRoditelj.find('.stavka-ukupno')[0];
+    let cena = parseFloat(cenaTd.html())
 
-
-    let cena = parseFloat(cenaTd.innerText)
     try {
-        ukupnoTd.innerText = cena * inputKolicina
+        ukupnoTd.html((cena * inputKolicina).toFixed(2));
     } catch (exception) {
-        ukupnoTd.innerText = 0;
+        ukupnoTd.html(0)
+    }finally {
+        azurirajIznosUkupnoNaFakturi()
     }
-})
+
+}
+
+function azurirajIznosUkupnoNaFakturi(){
+
+    let stavke = $('.stavka-iznos');
+    let ukupnaSuma=0;
+    for(let i=0 ;i<stavke.length;i++){
+        ukupnaSuma+=parseFloat(stavke[i].innerText);
+    }
+    $('#ukupan-iznos-fakture').html(ukupnaSuma.toFixed(2))
+
+}
 
 function brisanjeStavke(e) {
-    console.log(e)
+    e.preventDefault()
+    let tr = $(e.target).parents('tr');
+    tr.remove()
+    azurirajIznosUkupnoNaFakturi();
 }
+
+$('.stavka-select-class').on('change', azurirajVrednostiReda);
+
+$('.stavka-kolicina-class').keyup(azurirajIznosURedu)
+
+$('.btn-obrisi-stavku').on('click', brisanjeStavke);
 
 $('#dodajStavkuFaktureBtn').click(function (e) {
     e.preventDefault();
+
+    let prototip = $(`<tr></tr>`);
+
+    let td = $(`<td></td>`);
+    let selectProizvodi = $('#stavke-fakture-template-proizvodi').find('select').clone();
+
+
+    selectProizvodi.change(azurirajVrednostiReda)
+    td.append(selectProizvodi);
+    prototip.append(td);
+
+    td = $(`<td></td>`);
+    let inputKolicina = $(` <input type="number" class="stavka-kolicina-class form-control"
+                                                   name="stavka-kolicina"
+                                                   value="0"
+                                                   min="0"
+                                                   oninput="validity.valid||(value='')">`)
+    inputKolicina.keyup(azurirajIznosURedu);
+    td.append(inputKolicina);
+    prototip.append(td);
+
+    let tdJedinicaMere = $(`<td class="stavka-jedinica-mere">0</td>`);
+    prototip.append(tdJedinicaMere);
+
+    let tdStavkaCena = $(`<td class="stavka-cena">0</td>`);
+    prototip.append(tdStavkaCena);
+
+    let tdStavkaUkupno = $(`<td class="stavka-iznos">0</td>`);
+    prototip.append(tdStavkaUkupno);
+
     let dugmeObrisi = $(`<button type="button" class="btn btn-danger btn-obrisi-stavku">X</button>`);
     dugmeObrisi.click(brisanjeStavke);
-    console.log(dugmeObrisi[0].outerHTML)
-    let prototip = $(`<tr>
-                                        <td>
-                                        ${$('#stavke-fakture-template-proizvodi').html()}
-                                        </td>
-                                        <td>
-                                            <input type="number" class="stavka-kolicina-class form-control"
-                                                   name="stavka-kolicina"
-                                                   value="0">
-                                        </td>
-                                        <td class="stavka-jedinica-mere">0</td>
-                                        <td class="stavka-cena">0</td>
-                                        <td class="stavka-ukupno">0</td>
-                                    </tr>
-        `);
-    let td = $(`<td></td>`);
+    td = $(`<td></td>`);
     td.append(dugmeObrisi);
     prototip.append(td);
+
     $('#stavke-table-body tr:last').before(prototip);
 })
 
-$('.btn-obrisi-stavku').on('click', brisanjeStavke);
+
 
 $("#btn-stapmanje-dialog").click(function () {
     $('.body-container').hide();
