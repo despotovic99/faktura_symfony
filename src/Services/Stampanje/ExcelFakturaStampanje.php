@@ -37,13 +37,21 @@ class ExcelFakturaStampanje implements FakturaStampanjeServiceInterface {
         $sheet->setCellValue('A5', 'Stavke');
         $sheet->setCellValue('A6', 'Artikl');
         $sheet->setCellValue('B6', 'Kolicina');
+        $sheet->setCellValue('C6', 'JM');
+        $sheet->setCellValue('D6', 'Cena po jedinici');
+        $sheet->setCellValue('E6', 'Iznos');
 
         $index=7;
         foreach ($faktura->getStavke() as $stavka){
-            $sheet->setCellValue('A'.$index, $stavka->getNazivArtikla());
+            $sheet->setCellValue('A'.$index, $stavka->getProizvod()->getNazivProizvoda());
             $sheet->setCellValue('B'.$index, $stavka->getKolicina());
+            $sheet->setCellValue('C'.$index, $stavka->getProizvod()->getJedinicaMere()->getOznaka());
+            $sheet->setCellValue('D'.$index, $stavka->getProizvod()->getCenaPoJedinici());
+            $sheet->setCellValue('E'.$index, $stavka->getKolicina()*$stavka->getProizvod()->getCenaPoJedinici());
             $index++;
         }
+        $sheet->setCellValue('D'.$index, 'Ukupan iznos');
+        $sheet->setCellValue('E'.$index, $faktura->getUkupanIznos());
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($imeFajla);

@@ -119,10 +119,7 @@
 
                 <div class="faktura-form-buttons d-flex justify-content-end ">
                     <div class="btn-otkazi p-2">
-                        <button class="btn btn-danger" type="button">Otkazi</button>
-                    </div>
-                    <div class="btn-reset p-2">
-                        <button class="btn btn-secondary" type="reset">Reset</button>
+                        <a href="{{ path('sve_fakture') }}" class="btn btn-danger" type="button">Otkazi</a>
                     </div>
                     <div class="btn-print p-2">
                         {% if faktura.id is defined %}

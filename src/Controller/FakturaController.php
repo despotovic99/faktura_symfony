@@ -69,7 +69,7 @@ class FakturaController extends AbstractController {
     }
 
     #[Route('/{fakturaId}', name: 'prikazi_fakturu', methods: ['GET'], requirements: ['fakturaId' => '\d+'])]
-    public function prikazFakture(int $fakturaId, Request $request) {
+    public function prikazFakture(int $fakturaId) {
 
         // mozda korisnik ne sme da vidi fakturu
         $faktura = $this->fakturaDBServis->find($fakturaId);
@@ -103,7 +103,7 @@ class FakturaController extends AbstractController {
     }
 
 
-    #[Route('/{$fakturaId}', name: 'obrisi_fakturu', methods: ['DELETE'])]
+    #[Route('/{fakturaId}', name: 'obrisi_fakturu', methods: ['DELETE'] ,requirements: ['fakturaId' => '\d+'])]
     public function obrisiFakturu(int $fakturaId) {
 
         $faktura = $this->fakturaDBServis->find($fakturaId);
