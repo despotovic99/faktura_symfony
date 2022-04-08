@@ -7,13 +7,16 @@ use App\Entity\Organizacija;
 use App\Entity\Proizvod;
 use App\Entity\StavkaFakture;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FakturaDatabaseService {
 
     private $managerRegistry;
+    private $validator;
 
-    public function __construct(ManagerRegistry $managerRegistry) {
+    public function __construct(ManagerRegistry $managerRegistry,ValidatorInterface $validator) {
         $this->managerRegistry = $managerRegistry;
+        $this->validator=$validator;
     }
 
     public function findAll() {
@@ -46,12 +49,6 @@ class FakturaDatabaseService {
             $faktura = new Faktura();
         }
 
-        if($this->fakturaNotValid($fakturaSaForme)){
-            return [
-                'Neispravno popunjena faktura!',
-                $faktura->getId()
-            ];
-        }
 
         $entityManager = $this->managerRegistry->getManager();
 
@@ -70,6 +67,11 @@ class FakturaDatabaseService {
             $organizacija = $entityManager->getRepository(Organizacija::class)->find($fakturaSaForme['organizacija']);
             $faktura->setOrganizacija($organizacija);
 
+            $errors = $this->validator->validate($faktura);
+            if(count($errors)>0){
+                throw new \Exception('Neispravno popunjena faktura');
+            }
+
             if (!isset($fakturaSaForme['stavke'])) {
                 $faktura->obrisiStavke();
             }
@@ -80,7 +82,7 @@ class FakturaDatabaseService {
         } catch (\Throwable $exception) {
             $this->managerRegistry->getConnection()->rollback();
             return [
-                'Neuspesno sacuvana faktura',
+                $exception->getMessage(),
                 $faktura->getId()
             ];
         }

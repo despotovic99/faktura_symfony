@@ -20,14 +20,15 @@ class Faktura {
     private $id;
 
     #[ORM\Column(type: 'string', length: 30, name: 'broj_racuna',unique: true)]
-    #[Assert\NotBlank(message: 'Unesi broj racuna')]
+    #[Assert\NotBlank(message: 'Unesi broj racuna',allowNull: false)]
     private $brojRacuna;
 
     #[ORM\Column(type: 'date',name: 'datum_izdavanja')]
-    #[Assert\NotBlank(message: 'Unesi datum izdavanja racuna')]
+    #[Assert\NotBlank(message: 'Unesi datum izdavanja racuna',allowNull: false)]
     private $datumIzdavanja;
 
     #[ORM\ManyToOne(targetEntity: Organizacija::class, inversedBy: 'fakture')]
+    #[Assert\NotNull(message: 'Organizacija nije odabrana')]
     private $organizacija;
 
     #[ORM\OneToMany(mappedBy: 'faktura', targetEntity: StavkaFakture::class, orphanRemoval: true, cascade: ['persist'])]
