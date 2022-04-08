@@ -56,14 +56,12 @@ class FakturaController extends AbstractController {
     public function novaFaktura(): Response {
 
         $organizacije = $this->organizacijaDBServis->findAll();
-        $proizvodi=$this->proizvodDBServis->findAll();
+        $proizvodi = $this->proizvodDBServis->findAll();
 
-//        $form = $this->napraviFormu($organizacije, null);
 
         return $this->render('faktura/faktura.html.twig', [
-//            'form' => $form->createView(),
             'organizacije' => $organizacije,
-            'proizvodi'=>$proizvodi
+            'proizvodi' => $proizvodi
         ]);
 
     }
@@ -71,16 +69,15 @@ class FakturaController extends AbstractController {
     #[Route('/{fakturaId}', name: 'prikazi_fakturu', methods: ['GET'], requirements: ['fakturaId' => '\d+'])]
     public function prikazFakture(int $fakturaId) {
 
-        // mozda korisnik ne sme da vidi fakturu
         $faktura = $this->fakturaDBServis->find($fakturaId);
 
         $organizacije = $this->organizacijaDBServis->findAll();
-        $proizvodi=$this->proizvodDBServis->findAll();
+        $proizvodi = $this->proizvodDBServis->findAll();
 
         return $this->render('faktura/faktura.html.twig', [
             'faktura' => $faktura,
             'organizacije' => $organizacije,
-            'proizvodi'=>$proizvodi
+            'proizvodi' => $proizvodi
         ]);
     }
 
@@ -88,22 +85,27 @@ class FakturaController extends AbstractController {
     public function sacuvajFakturu(Request $request) {
 
         $faktura = [
-            'id'=>$request->get('id_fakture'),
-            'broj_racuna'=>$request->get('broj_racuna'),
-            'datum_izdavanja'=>$request->get('datum_izdavanja'),
-            'organizacija'=>$request->get('organizacija'),
-            'stavke'=>$request->get('stavke'),
+            'id' => $request->get('id_fakture'),
+            'broj_racuna' => $request->get('broj_racuna'),
+            'datum_izdavanja' => $request->get('datum_izdavanja'),
+            'organizacija' => $request->get('organizacija'),
+            'stavke' => $request->get('stavke'),
         ];
 
-        $poruka = $this->fakturaDBServis->save($faktura);
+        [$poruka, $fakturaId] = $this->fakturaDBServis->save($faktura);
 
         $this->addFlash('poruka', $poruka);
 
-        return $this->redirectToRoute('sve_fakture');
+        if ($fakturaId) {
+            return $this->redirectToRoute('prikazi_fakturu',['fakturaId'=>$fakturaId]);
+        }
+
+        return $this->redirectToRoute('nova_faktura');
+
     }
 
 
-    #[Route('/{fakturaId}', name: 'obrisi_fakturu', methods: ['DELETE'] ,requirements: ['fakturaId' => '\d+'])]
+    #[Route('/{fakturaId}', name: 'obrisi_fakturu', methods: ['DELETE'], requirements: ['fakturaId' => '\d+'])]
     public function obrisiFakturu(int $fakturaId) {
 
         $faktura = $this->fakturaDBServis->find($fakturaId);

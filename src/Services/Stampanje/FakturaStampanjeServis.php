@@ -18,11 +18,8 @@ class FakturaStampanjeServis {
 
 
     public function stampaj(int $idFakture, string $formatFakture) {
-        $printer = $this->getPrinter($formatFakture);
 
-//        if(!$printer){
-//            return $printer;
-//        }
+        $printer = $this->getPrinter($formatFakture);
 
         $faktura = $this->fakturaRepository->find($idFakture);
 

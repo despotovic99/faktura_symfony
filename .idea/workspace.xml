@@ -5,9 +5,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/ br3 Faktura.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/ br3 Faktura.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/a123Faktura.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/a123iFaktura.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/a123iFaktura.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/br2Faktura.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/br2Faktura.xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Stampanje/ExcelFakturaStampanje.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Stampanje/ExcelFakturaStampanje.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/Stampanje/WordFakturaStampanje.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Stampanje/WordFakturaStampanje.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/FakturaDatabaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FakturaDatabaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Stampanje/FakturaStampanjeServis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Stampanje/FakturaStampanjeServis.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
     </list>
@@ -279,7 +286,9 @@
       <workItem from="1648451316547" duration="27967000" />
       <workItem from="1648538500291" duration="89651000" />
       <workItem from="1649057069662" duration="69115000" />
-      <workItem from="1649317691123" duration="20279000" />
+      <workItem from="1649317691123" duration="20973000" />
+      <workItem from="1649404773038" duration="3177000" />
+      <workItem from="1649409451699" duration="7128000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -390,14 +399,19 @@
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Controller/FakturaController.php</url>
-          <line>97</line>
-          <option name="timeStamp" value="36" />
+          <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
+          <line>87</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
-          <line>76</line>
-          <option name="timeStamp" value="39" />
+          <line>151</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
+          <line>43</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

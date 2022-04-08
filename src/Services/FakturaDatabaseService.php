@@ -40,14 +40,26 @@ class FakturaDatabaseService {
     }
 
     public function save($fakturaSaForme) {
+
         $faktura = $this->find($fakturaSaForme['id']);
         if (!$faktura) {
             $faktura = new Faktura();
         }
+
+        if($this->fakturaNotValid($fakturaSaForme)){
+            return [
+                'Neispravno popunjena faktura!',
+                $faktura->getId()
+            ];
+        }
+
         $entityManager = $this->managerRegistry->getManager();
 
         if (isset($fakturaSaForme['stavke']) && !$this->proveraStavki($faktura, $fakturaSaForme['stavke'])) {
-            return 'Fatal error!';
+            return [
+                'Fatal error!',
+                $faktura->getId()
+            ];
         }
 
         $this->managerRegistry->getConnection()->beginTransaction();
@@ -67,7 +79,10 @@ class FakturaDatabaseService {
             $this->managerRegistry->getConnection()->commit();
         } catch (\Throwable $exception) {
             $this->managerRegistry->getConnection()->rollback();
-            return 'Neuspesno sacuvana faktura';
+            return [
+                'Neuspesno sacuvana faktura',
+                $faktura->getId()
+            ];
         }
 
         if (isset($fakturaSaForme['stavke'])) {
@@ -134,7 +149,10 @@ class FakturaDatabaseService {
             }
         }
 
-        return 'Uspesno sacuvana faktura';
+        return [
+            'Uspesno sacuvana faktura',
+            $faktura->getId()
+        ];
     }
 
     private function proveraStavki($faktura, $stavke): bool {
@@ -155,5 +173,11 @@ class FakturaDatabaseService {
             return 0;
         }
         return ($a['stavka_id'] < $b['stavka_id']) ? -1 : 1;
+    }
+
+    private function fakturaNotValid($fakturaSaForme):bool{
+        return empty($fakturaSaForme['broj_racuna']) ||
+                      empty($fakturaSaForme['datum_izdavanja']) ||
+                      empty($fakturaSaForme['organizacija']) ;
     }
 }

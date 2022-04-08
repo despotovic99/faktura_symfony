@@ -34,7 +34,7 @@
                     <div class="col-md-4">
                         <label class="form-label">Organizacija</label>
                         <select class="form-select" name="organizacija">
-                            <option selected>Obaberi</option>
+                            <option value="" selected>Odaberi</option>
                             {% for organizacija in organizacije %}
                                 <option value="{{ organizacija.id }}"
                                         {% if faktura is defined  and  faktura.organizacija.id==organizacija.id %}
@@ -104,10 +104,10 @@
                                 {% endfor %}
                             {% endif %}
                             <tr class="fw-bold" id="ukupno-red">
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>Ukupno</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td id="ukupan-iznos-fakture"> {% if faktura is defined %}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
                                 <td></td>
                             </tr>
