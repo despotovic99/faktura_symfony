@@ -2081,3 +2081,10 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Fri Apr 08 07:59:24.092895 2022] [php:notice] [pid 18] [client 172.21.0.1:51072] Xdebug: [Step Debug] Could not connect to debugging client. Tried: 172.21.0.1:9003 (from REMOTE_ADDR HTTP header), host.docker.internal:9003 (fallback through xdebug.client_host/xdebug.client_port) :-(, referer: http://localhost/fakture/1
 [Fri Apr 08 07:59:24.162332 2022] [php:notice] [pid 18] [client 172.21.0.1:51072] Xdebug: [Step Debug] Could not connect to debugging client. Tried: 172.21.0.1:9003 (from REMOTE_ADDR HTTP header), host.docker.internal:9003 (fallback through xdebug.client_host/xdebug.client_port) :-(, referer: http://localhost/fakture/1
 [Fri Apr 08 13:26:10.061432 2022] [core:notice] [pid 1] AH00051: child pid 17 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Apr 12 14:20:41.910904 2022] [php:notice] [pid 18] [client 172.21.0.1:51542] 2022-04-12T14:20:41+00:00 [critical] Uncaught Error: syntax error, unexpected variable "$faktura"
+[Tue Apr 12 14:21:32.685886 2022] [core:notice] [pid 1] AH00051: child pid 22 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Apr 12 15:05:04.786188 2022] [core:notice] [pid 1] AH00051: child pid 24 exit signal Segmentation fault (11), possible coredump in /etc/apache2
+[Tue Apr 12 15:23:21.743932 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.24.0.3. Set the 'ServerName' directive globally to suppress this message
+[Wed Apr 13 07:26:05.810204 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.0.10 configured -- resuming normal operations
+[Wed Apr 13 07:26:05.810257 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'

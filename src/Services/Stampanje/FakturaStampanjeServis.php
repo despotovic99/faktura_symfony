@@ -17,7 +17,7 @@ class FakturaStampanjeServis {
     }
 
 
-    public function stampaj(int $idFakture, string $formatFakture) {
+    public function stampaj(int $idFakture, string $formatFakture){
 
         $printer = $this->getPrinter($formatFakture);
 

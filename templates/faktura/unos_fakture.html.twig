@@ -1,0 +1,162 @@
+{% extends  'base.html.twig' %}
+{% block cssStrane %}
+    {{ encore_entry_link_tags('css/faktura') }}
+{% endblock %}
+
+  {% block body %}
+      {{ parent() }}
+  {% endblock %}
+
+{% block bodyContainer %}
+
+    <div class="body-container">
+
+        <div class="faktura-forma-div ">
+            <form class="faktura-form" method="post" action="{{ path('sacuvaj_fakturu') }}">
+                <input type="hidden" name="id_fakture" value=" {% if faktura is defined and faktura is not null %}{{ faktura.id }}{% endif %}">
+                <div class="faktura-form-header row ">
+                    <div class="col-8 text-center">
+                        <h1>Faktura</h1>
+                    </div>
+                    <div class="col mb-3">
+                        <label class="form-label">Datum izdavanja</label>
+                        <input class="form-control" type="date" name="datum_izdavanja"
+                               {% if faktura is defined and faktura is not null%}value='{{ faktura.datumizdavanja|date('Y-m-d') }}' {% endif %}>
+                    </div>
+                </div>
+
+                <div class="faktura-form-body row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Broj racuna</label>
+                        <input type="text" name="broj_racuna" class="form-control"
+                               value="{% if faktura is defined and faktura is not null%}{{ faktura.brojracuna }}{% endif %} ">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Organizacija</label>
+                        <select class="form-select" name="organizacija">
+                            <option value="" selected>Odaberi</option>
+                            {% for organizacija in organizacije %}
+                                <option value="{{ organizacija.id }}"
+                                        {% if faktura is defined  and faktura is not null  and  faktura.organizacija.id==organizacija.id %}
+                                selected
+                                        {% endif %}>{{ organizacija.naziv }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="stavke-fakture-container mt-4" id="stavke-fakture-container">
+                    <div class="stavke-fakture-container-header row">
+                        <div class="col-9">
+                            <h2>Stavke fakture</h2>
+                        </div>
+                        <div class="col-3 dodaj-stavku-div">
+                            <button id="dodajStavkuFaktureBtn" class="btn btn-success h-80" type="button">Dodaj stavku
+                            </button>
+                        </div>
+                    </div>
+                    <div class="stavke-fakture-container-body  mt-3">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">proizvod</th>
+                                <th scope="col">kolicina</th>
+                                <th scope="col">jm</th>
+                                <th scope="col">cena po jedinici</th>
+                                <th scope="col">iznos</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody id="stavke-table-body" brojStavki="{% if faktura is defined and faktura is not null %}{{ faktura.stavke|length }}{% else %}0{% endif %}">
+                            {% if faktura is defined and faktura is not null%}
+                                {% for stavka in faktura.stavke %}
+                                    <tr>
+                                            <input type="hidden" name="stavke[{{ loop.index }}][stavka_id]" value="{{ stavka.id }}">
+                                        <td>
+                                            <select class="stavka-select-class form-select"
+                                                    name="stavke[{{ loop.index }}][stavka_proizvod]">
+                                                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                                                {% for proizvod in proizvodi %}
+                                                    <option value="{{ proizvod.id }}"
+                                                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                                                            data-cenapojedinici="{{ proizvod.cenapojedinici }}"
+                                                            {% if stavka.proizvod.id==proizvod.id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ proizvod.nazivproizvoda }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="stavka-kolicina-class form-control"
+                                                   name="stavke[{{ loop.index }}][kolicina]"
+                                                   value="{{ stavka.kolicina }}"
+                                                   min="0"
+                                                   oninput="validity.valid||(value='')">
+                                        </td>
+                                        <td class="stavka-jedinica-mere">{{ stavka.proizvod.jedinicamere.oznaka }}</td>
+                                        <td class="stavka-cena">{{ stavka.proizvod.cenapojedinici }}</td>
+                                        <td class="stavka-iznos">{{ stavka.kolicina* stavka.proizvod.cenapojedinici }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-obrisi-stavku">X</button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            <tr class="fw-bold" id="ukupno-red">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Ukupno</td>
+                                <td id="ukupan-iznos-fakture"> {% if faktura is defined and faktura is not null%}{{ faktura.ukupaniznos }}{% else %}0{% endif %}</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="faktura-form-buttons d-flex justify-content-end ">
+                    <div class="btn-otkazi p-2">
+                        <a href="{{ path('sve_fakture') }}" class="btn btn-danger" type="button">Otkazi</a>
+                    </div>
+                    <div class="btn-submit p-2">
+                        <button class="btn btn-success" type="submit">Sacuvaj</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div id="stavke-fakture-template-proizvodi" style="display: none">
+            <select class="stavka-select-class form-select"
+                    name="">
+                <option data-jm="/" data-cenapojedinici="0">Izaberi proizvod</option>
+                {% for proizvod in proizvodi %}
+                    <option value="{{ proizvod.id }}"
+                            data-jm="{{ proizvod.jedinicamere.oznaka }}"
+                            data-cenapojedinici="{{ proizvod.cenapojedinici }}">{{ proizvod.nazivproizvoda }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+    </div>
+
+
+
+
+    {% block customjavascripts %}
+        {#    <script src="{{ asset('assets/js/faktura.js') }}"></script> #}
+        {{ encore_entry_script_tags('js/faktura') }}
+    {% endblock %}
+    {% for message in app.flashes('poruka') %}
+        <script>alert('{{ message }}')</script>
+    {% endfor %}
+{% endblock %}
+
+

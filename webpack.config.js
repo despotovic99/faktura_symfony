@@ -13,6 +13,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('js/faktura', ['./assets/js/faktura.js'])
+    .addEntry('js/prikazFakture', ['./assets/js/prikazFakture.js'])
     .addStyleEntry('css/faktura', ['./assets/css/faktura.css'])
     .addStyleEntry('css/base', ['./assets/css/base.css'])
     .addStyleEntry('css/fakturaIndex', ['./assets/css/fakturaIndex.css'])

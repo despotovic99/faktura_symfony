@@ -3,10 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="b0a86523-f4a4-41f7-8cf1-4ce867d32e75" name="Changes" comment="izmenjena forma fakture ugnjezdena stavka">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/faktura.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/faktura.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" beforeDir="false" afterPath="$PROJECT_DIR$/docker/logs/apache2/other_vhosts_access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Faktura.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Faktura.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/br1                  Faktura.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/br1 Faktura.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/br1Faktura.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FakturaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FakturaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Services/FakturaDatabaseService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FakturaDatabaseService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/Stampanje/FakturaStampanjeServis.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/Stampanje/FakturaStampanjeServis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/faktura.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/unos_fakture.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/faktura/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/faktura/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +54,9 @@
     <setting file="file://$PROJECT_DIR$/assets/css/fakturaIndex.css" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/assets/js/faktura.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Services/OrganizacijaDatabaseService.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/templates/faktura/faktura.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/faktura/unos_fakture.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Services/ProizvodDatabaseService.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/faktura/prikaz_fakture.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Entity/Proizvod.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Services/Stampanje/FakturaStampanjeServis.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -66,6 +75,7 @@
     <setting file="file://$PROJECT_DIR$/src/Controller/FakturaController.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/templates/faktura/index.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Entity/JedinicaMere.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/includes/_navbar.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Interfaces/FakturaStampanjeServiceInterface.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Services/Stampanje/ExcelFakturaStampanje.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/vendor/symfony/http-kernel/Kernel.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -80,6 +90,26 @@
         <path_mappings>
           <mapping local-root="$PROJECT_DIR$" remote-root="/var/www/html" />
           <mapping local-root="$PROJECT_DIR$/public" remote-root="/var/www/html/public" />
+        </path_mappings>
+      </server>
+      <server host="127.0.0.1" id="6ab59edb-4a37-42ba-b814-cf12f16ea38b" name="127.0.0.1" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/vendor/symfony/http-client-contracts/Test/Fixtures/web" remote-root="/var/www/html" />
+        </path_mappings>
+      </server>
+      <server host="0.0.0.0" id="58686a5e-d901-49a5-a2b6-77140d670197" name="0.0.0.0" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/vendor/symfony/http-client-contracts/Test/Fixtures/web" remote-root="/var/www/html" />
+        </path_mappings>
+      </server>
+      <server host="172.22.0.3" id="403f5d24-a5d3-46b6-9e07-49b83384ac08" name="172.22.0.3" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/vendor/symfony/http-client-contracts/Test/Fixtures/web" remote-root="/var/www/html" />
+        </path_mappings>
+      </server>
+      <server host="172.22.0.1" id="ffc21752-f3f3-4b9c-9fdd-eb63464e22ce" name="172.22.0.1" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/vendor/symfony/http-client-contracts/Test/Fixtures/web" remote-root="/var/www/html" />
         </path_mappings>
       </server>
     </servers>
@@ -278,7 +308,10 @@
       <workItem from="1649057069662" duration="69115000" />
       <workItem from="1649317691123" duration="20973000" />
       <workItem from="1649404773038" duration="3177000" />
-      <workItem from="1649409451699" duration="9024000" />
+      <workItem from="1649409451699" duration="16063000" />
+      <workItem from="1649758266641" duration="1758000" />
+      <workItem from="1649765800221" duration="7011000" />
+      <workItem from="1649834416519" duration="2078000" />
     </task>
     <task id="LOCAL-00001" summary="Zavrsene CRUD operacije">
       <created>1648045675986</created>
@@ -390,23 +423,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
-          <line>89</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
-          <line>46</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
           <line>71</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Services/FakturaDatabaseService.php</url>
-          <line>83</line>
-          <option name="timeStamp" value="46" />
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -68,7 +68,7 @@ class FakturaDatabaseService {
             $faktura->setOrganizacija($organizacija);
 
             $errors = $this->validator->validate($faktura);
-            if(count($errors)>0){
+            if($errors->count()>0){
                 throw new \Exception('Neispravno popunjena faktura');
             }
 

@@ -2,24 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Faktura;
-use App\Entity\Organizacija;
 use App\Exceptions\PrinterException;
-use App\Form\FakturaType;
-use App\Form\StavkaFaktureType;
 use App\Services\FakturaDatabaseService;
 use App\Services\OrganizacijaDatabaseService;
 use App\Services\ProizvodDatabaseService;
-use App\Services\Stampanje\ExcelFakturaStampanje;
 use App\Services\Stampanje\FakturaStampanjeServis;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,14 +40,29 @@ class FakturaController extends AbstractController {
         ]);
     }
 
-    #[Route('/nova', name: 'nova_faktura', methods: ['GET'])]
-    public function novaFaktura(): Response {
+    #[Route('/f', name: 'asd', methods: ['GET'])]
+    public function index2(): Response {
+
+
+        return $this->render('faktura/prikaz_fakture.html.twig');
+    }
+
+
+    #[Route('/unos', name: 'unos_fakture', methods: ['GET'])]
+    public function novaFaktura(Request $request): Response {
 
         $organizacije = $this->organizacijaDBServis->findAll();
         $proizvodi = $this->proizvodDBServis->findAll();
 
+        $fakturaId=$request->get('id_fakture');
 
-        return $this->render('faktura/faktura.html.twig', [
+        $faktura=null;
+        if($fakturaId){
+        $faktura = $this->fakturaDBServis->find($fakturaId);
+        }
+
+        return $this->render('faktura/unos_fakture.html.twig', [
+            'faktura' => $faktura,
             'organizacije' => $organizacije,
             'proizvodi' => $proizvodi
         ]);
@@ -71,13 +74,8 @@ class FakturaController extends AbstractController {
 
         $faktura = $this->fakturaDBServis->find($fakturaId);
 
-        $organizacije = $this->organizacijaDBServis->findAll();
-        $proizvodi = $this->proizvodDBServis->findAll();
-
-        return $this->render('faktura/faktura.html.twig', [
-            'faktura' => $faktura,
-            'organizacije' => $organizacije,
-            'proizvodi' => $proizvodi
+        return $this->render('faktura/prikaz_fakture.html.twig', [
+            'faktura' => $faktura
         ]);
     }
 
@@ -97,11 +95,11 @@ class FakturaController extends AbstractController {
         $this->addFlash('poruka', $poruka);
 
         if ($fakturaId) {
-            return $this->redirectToRoute('prikazi_fakturu',['fakturaId'=>$fakturaId]);
+
+            return $this->redirectToRoute('prikazi_fakturu', ['fakturaId' => $fakturaId]);
         }
 
         return $this->redirectToRoute('nova_faktura');
-
     }
 
 
@@ -123,7 +121,7 @@ class FakturaController extends AbstractController {
         return $this->redirectToRoute('sve_fakture');
     }
 
-
+// todo kako stampati novu fakturu, jos uvek nesacuvanu?
     #[Route('/{fakturaId}/{formatStampe}', name: 'stampanje_fakture', methods: ['GET'], requirements: ['fakturaId' => '\d+'])]
     public function stampanjeFakture(int $fakturaId, string $formatStampe) {
 
